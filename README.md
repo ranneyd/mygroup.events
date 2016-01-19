@@ -22,5 +22,5 @@ layouts, including a list with the soonest event at the top and a calendar.
 ## Technologies
 
 MyGroup.events will be made with Node.js and Express. It will be modularized as best as possible in
-case someone wants to implement their own version instead of using [MyGroup.events]. The database
-will be MongoDB and the front end will use MaterializeCSS.
+case someone wants to implement their own version instead of using [MyGroup.events](www.mygroup.events). The database
+will be MongoDB and the front end will use [MaterializeCSS](materializecss.com).
