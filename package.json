@@ -1,0 +1,19 @@
+{
+  "name": "mygroup.events",
+  "version": "1.0.0",
+  "description": "MyGroup.events is a way to organize events for members of a specific group or organization.\r Frequently, people will want to coordinate events within a group. For instance, an office might want\r to plan an after-work happy hour, or a freshman class might want to organize trips to eat off campus\r or see a movie. These events are often poorly organized: they take the form of a giant email or a\r social media post. This is because people lack a tool to organize these meetings. Some websites\r exist for organizing meetups, but they usually focus on meeting new people, not organizing events\r with people you already know.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ranneyd/mygroup.events.git"
+  },
+  "author": "Dustin Kane",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/ranneyd/mygroup.events/issues"
+  },
+  "homepage": "https://github.com/ranneyd/mygroup.events#readme"
+}
