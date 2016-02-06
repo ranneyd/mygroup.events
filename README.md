@@ -1,8 +1,8 @@
-# MyGroup.events
+# Ravie
 
 ## What it is
 
-MyGroup.events is a way to organize events for members of a specific group or organization.
+Ravie is a way to organize events for members of a specific group or organization.
 Frequently, people will want to coordinate events within a group. For instance, an office might want
 to plan an after-work happy hour, or a freshman class might want to organize trips to eat off campus
 or see a movie. These events are often poorly organized: they take the form of a giant email or a
@@ -10,7 +10,7 @@ social media post. This is because people lack a tool to organize these meetings
 exist for organizing meetups, but they usually focus on meeting new people, not organizing events
 with people you already know. 
 
-MyGroup.events is the solution to this problem. MyGroup.events allows a group to make its own social
+Ravie is the solution to this problem. Ravie allows a group to make its own social
 network that is based entirely on planning events. Members can either post large, premeditated
 events like barbecues and camping trips or small, spontaneous events like a few people going for
 drinks after work and wanting anyone who'd like to join in to come. The group can be invite only or
@@ -21,7 +21,7 @@ layouts, including a list with the soonest event at the top and a calendar.
 
 ## Technologies
 
-MyGroup.events will be made with [Node.js](http://nodejs.org) and [Express](http://expressjs.com/).
+Ravie will be made with [Node.js](http://nodejs.org) and [Express](http://expressjs.com/).
 It will be modularized as best as possible in case someone wants to implement their own version
-instead of using [MyGroup.events](http://mygroup.events). The database will be MongoDB and the front
+instead of using [Ravie](http://ravie.club). The database will be MongoDB and the front
 end will use [MaterializeCSS](http://materializecss.com).
