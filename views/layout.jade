@@ -1,7 +1,14 @@
 doctype html
 html
   head
-    title= title
+    title=title
+    link(rel='stylesheet', href='https://fonts.googleapis.com/icon?family=Material+Icons')
+    link(rel='stylesheet', href='/css/materialize.min.css')
     link(rel='stylesheet', href='/css/style.css')
   body
-    block content
+    block navbar
+    div.section.no-pad-bot#index-banner
+        div.container
+            block content
+    script(type='text/javascript' src='/js/jquery-2.2.0.min.js')
+    script(type='text/javascript' src='/js/materialize.min.js')
