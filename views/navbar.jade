@@ -1,3 +1,10 @@
-nav.light-blue.lighten-1(role='navigation')
-    div.nav-wrapper.container
-        a.brand-logo#logo-container(href="/")=title
+div.navbar-fixed
+    nav.orange.lighten-1(role='navigation')
+        div.nav-wrapper.container
+            a.brand-logo(href="/")=title
+            ul.right
+                li: a#menu(href='#' data-activates='mobile-demo') dustinpkane
+            ul.side-nav#mobile-demo
+                li: a My Groups
+                li: a Change Password
+                li: a Logout
