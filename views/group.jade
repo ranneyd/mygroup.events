@@ -5,18 +5,15 @@ block navbar
 block content
     div.row
         div.col.s12.m10.offset-m1.l8.offset-l2
-            div.card
+            div.card.hoverable
+                div.card-image
+                    img.activator(src="images/beachbanner.png")
                 div.card-content
-                    span.card-title Beach
+                    span.card-title.activator Beach<i class="material-icons right">more_vert</i>
                     p Let's go to the beach
-                div.card-action
-                    a RSVP
-    div.row
-        div.col.s12.m10.offset-m1.l8.offset-l2
-            div.card
-                div.card-content
-                    span.card-title Bowling
-                    p Let's go bowling
+                div.card-reveal
+                    span.card-title Beach<i class="material-icons right">close</i>
+                    p More information
                 div.card-action
                     a RSVP
 

@@ -1,1 +1,4 @@
 data/journal/**
+
+data/mongod.lock
+data/mongod.lock
