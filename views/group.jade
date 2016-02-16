@@ -16,10 +16,43 @@ block content
                     p More information
                 div.card-action
                     a RSVP
-    div.modal#add-event
+    div.modal.modal-fixed-footer#add-event
         div.modal-content
-            h4 Add a new event
-            p test
+            h4
+                | Add a new event 
+                i.material-icons.right.modal-close close
+            div.row
+                div.col.s12
+                    ul.tabs
+                        li.tab.col.s12
+                            a.active(href="#test1") Test 1
+                        //- li.tab.col.s3
+                        //-     a(href="#test2") Test 2
+                        //- li.tab.col.s3
+                        //-     a(href="#test3") Test 3
+                        //- li.tab.col.s3
+                        //-     a(href="#test4") Test 4
+                div.col.s12#test1
+                    div.row
+                        form.col.s12
+                            div.row
+                                div.input-field.s6
+                                    input#name(type="text")
+                                    label(for="name") Name of your event
+                                div.input-field.s6
+                                    input.datepicker#date(type="date")
+                                    label(for="date") When is your event?
+                            div.row
+                                div.input-field.s12
+                                    textarea.materialize-textarea#description(type="text")
+                                    label(for="description") Description of your event
+                //- div.col.s12#test2
+                //-     p Test 2
+                //- div.col.s12#test3
+                //-     p Test 3
+                //- div.col.s12#test4
+                //-     p Test 4
         div.modal-footer
-            a.modal-action.modal-close Close
-            a.modal-action.modal-close Next
+            - var modalButtonClasses = "modal-action btn-flat waves-effect waves-dark"
+            a(class=modalButtonClasses) Submit
+            a.modal-close.left(class=modalButtonClasses) Close
