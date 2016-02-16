@@ -8,6 +8,7 @@ router.get('/', function(req, res, next) {
     res.render('index', { title: 'Ravie' });
 });
 
+// Group page
 router.get(/^\/(.*)/, function(req, res, next) {
     Group.find({
             "url": req.params[0]

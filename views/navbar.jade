@@ -1,9 +1,31 @@
-mixin nav-list
+mixin nav-list(dropdownID, mobile)
+    - var hoverAttributes = {"class":"tooltipped","data-position":"bottom", "data-delay":"50"};
+    - var aClasses = "waves-effect waves-light";
     if group
-        li: a new thing
+        if calendar
+            li
+                a(class=aClasses data-tooltip=(mobile ? false : "List view"))&attributes(mobile ? false : hoverAttributes)
+                    i.material-icons(class=(mobile ? 'left' : false)) view_agenda
+                    if mobile
+                        | List view
+        else
+            li
+                a(class=aClasses data-tooltip=(mobile ? false : "Calendar view"))&attributes(mobile ? false : hoverAttributes)
+                    i.material-icons(class=(mobile ? 'left' : false)) event
+                    if mobile
+                        | Calendar view
+        li
+            a.modal-trigger(class=aClasses href="#add-event" data-tooltip=(mobile ? false : "Add a new event"))&attributes(mobile ? false : hoverAttributes)
+                i.material-icons(class=(mobile ? 'left' : false)) add
+                if mobile
+                    | Add a new event
+
     li
-        a.dropdown-button(href='#' data-activates='user-menu'): strong dustinpkane
-        ul.dropdown-content#user-menu
+        a.dropdown-button(class=aClasses data-activates=dropdownID data-tooltip=(mobile ? false : "My Account"))&attributes(mobile ? false : hoverAttributes)
+            i.material-icons(class=(mobile ? 'left' : false)) account_circle
+            if mobile
+                    | My Account
+        ul.dropdown-content(id=dropdownID)
             li: a My Groups
             li: a Change Password
             li: a Logout
@@ -14,6 +36,6 @@ div.navbar-fixed
             a.brand-logo(href="/")=title
             a.button-collapse#mobile-menu-button(href='#' data-activates='mobile-menu'): i.material-icons menu
             ul.right.hide-on-med-and-down
-                +nav-list
+                +nav-list('user-menu')
             ul.side-nav#mobile-menu
-                +nav-list
+                +nav-list('mobile-user-menu', true)
