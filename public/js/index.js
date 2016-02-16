@@ -1,5 +1,5 @@
 $(document).ready(function(){
-    $("#menu").sideNav({
-        edge: "right"
+    $("#mobile-menu-button").sideNav({
+        edge: "left"
     });
 });

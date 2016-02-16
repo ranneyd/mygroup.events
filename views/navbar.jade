@@ -1,10 +1,19 @@
+mixin nav-list
+    if group
+        li: a new thing
+    li
+        a.dropdown-button(href='#' data-activates='user-menu'): strong dustinpkane
+        ul.dropdown-content#user-menu
+            li: a My Groups
+            li: a Change Password
+            li: a Logout
+
 div.navbar-fixed
     nav.orange.lighten-1(role='navigation')
         div.nav-wrapper.container
             a.brand-logo(href="/")=title
-            ul.right
-                li: a#menu(href='#' data-activates='mobile-demo') dustinpkane
-            ul.side-nav#mobile-demo
-                li: a My Groups
-                li: a Change Password
-                li: a Logout
+            a.button-collapse#mobile-menu-button(href='#' data-activates='mobile-menu'): i.material-icons menu
+            ul.right.hide-on-med-and-down
+                +nav-list
+            ul.side-nav#mobile-menu
+                +nav-list

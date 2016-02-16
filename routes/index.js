@@ -19,7 +19,7 @@ router.get(/^\/(.*)/, function(req, res, next) {
             }
             if ( results.length ){
                 console.log(results);
-                res.render('group', { title: results[0].name });
+                res.render('group', { title: results[0].name, group: true });
             }
             else {
                 res.render('notfound', { title: "Ravie" });

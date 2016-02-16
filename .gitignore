@@ -1,4 +1,2 @@
-data/journal/**
-
-data/mongod.lock
-data/mongod.lock
+data/**
+data/collection-0-9128099721202279404.wt
