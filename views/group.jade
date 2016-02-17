@@ -36,14 +36,18 @@ block content
                     div.row
                         form.col.s12
                             div.row
-                                div.input-field.s6
-                                    input#name(type="text")
+                                div.input-field.col.s12
+                                    input.validate#name(type="text" required)
                                     label(for="name") Name of your event
-                                div.input-field.s6
-                                    input.datepicker#date(type="date")
-                                    label(for="date") When is your event?
                             div.row
-                                div.input-field.s12
+                                div.input-field.col.s6
+                                    input.datepicker#date(type="date")
+                                    label(for="date") What date is your event?
+                                div.input-field.col.s6
+                                    input.validate#time(type="text" required pattern="(1[012]|[1-9]):[0-5][0-9] *(a|A|p|P)(m|M)")
+                                    label(for="time" data-error="Please enter a valid date") What time is your event?
+                            div.row
+                                div.input-field.col.s12
                                     textarea.materialize-textarea#description(type="text")
                                     label(for="description") Description of your event
                 //- div.col.s12#test2

@@ -10912,26 +10912,16 @@ select {
   border: 1px solid #ffffff;
   background: #ffffff;
   font-size: .8em;
-  padding: .66em 0;
   font-weight: bold;
   width: 33%;
   display: inline-block;
   vertical-align: bottom;
 }
 
-.picker__button--today:hover,
-.picker__button--clear:hover,
-.picker__button--close:hover {
-  cursor: pointer;
-  color: #000000;
-  background: #b1dcfb;
-  border-bottom-color: #b1dcfb;
-}
-
 .picker__button--today:focus,
 .picker__button--clear:focus,
 .picker__button--close:focus {
-  background: #b1dcfb;
+  background: #a1ded8;
   border-color: rgba(0, 0, 0, 0.05);
   outline: none;
 }
@@ -10950,27 +10940,6 @@ select {
   margin-right: .45em;
 }
 
-.picker__button--today:before {
-  top: -0.05em;
-  width: 0;
-  border-top: 0.66em solid #0059bc;
-  border-left: .66em solid transparent;
-}
-
-.picker__button--clear:before {
-  top: -0.25em;
-  width: .66em;
-  border-top: 3px solid #ee2200;
-}
-
-.picker__button--close:before {
-  content: "\D7";
-  top: -0.1em;
-  vertical-align: top;
-  font-size: 1.1em;
-  margin-right: .35em;
-  color: #777777;
-}
 
 .picker__button--today[disabled],
 .picker__button--today[disabled]:hover {
