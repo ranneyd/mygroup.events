@@ -22,7 +22,7 @@ block content
                 | Add a new event 
                 i.material-icons.right.modal-close close
             div.row
-                form.col.s12
+                form.col.s12#newEvent(method="post" action=currentUrl + "/new")
                     ul.tabs
                         li.tab.col.s4
                             a.active(href="#basic") Basic Info
@@ -34,23 +34,23 @@ block content
                         div.row
                             div.input-field.col.s12
                                 i.material-icons.prefix mode_edit
-                                input.validate#name(type="text" required)
+                                input.validate#name(name="name" type="text" required)
                                 label(for="name") Name of your event
                             div.input-field.col.s12
                                 i.material-icons.prefix date_range
-                                input.datepicker#date(type="date")
+                                input.datepicker#date(name="date" type="date")
                                 label(for="date") What date is it?
                             div.input-field.col.s6
                                 i.material-icons.prefix access_time
-                                input.validate#timeStart(type="text" required pattern="(1[012]|[1-9]):[0-5][0-9] *(a|A|p|P)(m|M)")
+                                input.validate#timeStart(name="timeStart" type="text" required pattern="(1[012]|[1-9]):[0-5][0-9] *(a|A|p|P)(m|M)")
                                 label(for="time" data-error="Please enter a valid time") When does it start?
                             div.input-field.col.s6
                                 i.material-icons.prefix access_time
-                                input.validate#timeEnd(type="text" required pattern="(1[012]|[1-9]):[0-5][0-9] *(a|A|p|P)(m|M)")
+                                input.validate#timeEnd(name="timeEnd" type="text" required pattern="(1[012]|[1-9]):[0-5][0-9] *(a|A|p|P)(m|M)")
                                 label(for="time" data-error="Please enter a valid time") When is it over?
                             div.input-field.col.s12
                                 i.material-icons.prefix event_note
-                                textarea.materialize-textarea#description(type="text")
+                                textarea.materialize-textarea#description(name="description" type="text")
                                 label(for="description") Describe your event.
                     div.col.s12#details
                         div.row
@@ -64,5 +64,11 @@ block content
                                 label(for="description") Describe your event.
         div.modal-footer
             - var modalButtonClasses = "modal-action btn-flat waves-effect waves-dark"
-            a(class=modalButtonClasses) Submit
+            a#newEventButton(class=modalButtonClasses) Submit
             a.modal-close.left(class=modalButtonClasses) Close
+
+block scripts
+    script(type="text/javascript").
+        $("#newEventButton").click(function(){
+            $("#newEvent").submit();
+        })

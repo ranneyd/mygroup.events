@@ -19,13 +19,18 @@ router.get(/^\/(.*)/, function(req, res, next) {
                 console.log(err);
             }
             if ( results.length ){
-                console.log(results);
-                res.render('group', { title: results[0].name, group: true });
+                res.render('group', { title: results[0].name, group: true, currentUrl: req.params[0] });
             }
             else {
                 res.render('notfound', { title: "Ravie" });
             }
     });
+});
+
+router.post(/^\/(.*)\/new/, function(req, res, next) {
+    console.log("yay, a request");
+    console.log(req.body);
+    res.redirect("/" + req.params[0]);
 });
 
 module.exports = router;
