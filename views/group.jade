@@ -22,40 +22,46 @@ block content
                 | Add a new event 
                 i.material-icons.right.modal-close close
             div.row
-                div.col.s12
+                form.col.s12
                     ul.tabs
-                        li.tab.col.s12
-                            a.active(href="#test1") Test 1
-                        //- li.tab.col.s3
-                        //-     a(href="#test2") Test 2
-                        //- li.tab.col.s3
-                        //-     a(href="#test3") Test 3
-                        //- li.tab.col.s3
-                        //-     a(href="#test4") Test 4
-                div.col.s12#test1
-                    div.row
-                        form.col.s12
-                            div.row
-                                div.input-field.col.s12
-                                    input.validate#name(type="text" required)
-                                    label(for="name") Name of your event
-                            div.row
-                                div.input-field.col.s6
-                                    input.datepicker#date(type="date")
-                                    label(for="date") What date is your event?
-                                div.input-field.col.s6
-                                    input.validate#time(type="text" required pattern="(1[012]|[1-9]):[0-5][0-9] *(a|A|p|P)(m|M)")
-                                    label(for="time" data-error="Please enter a valid date") What time is your event?
-                            div.row
-                                div.input-field.col.s12
-                                    textarea.materialize-textarea#description(type="text")
-                                    label(for="description") Description of your event
-                //- div.col.s12#test2
-                //-     p Test 2
-                //- div.col.s12#test3
-                //-     p Test 3
-                //- div.col.s12#test4
-                //-     p Test 4
+                        li.tab.col.s4
+                            a.active(href="#basic") Basic Info
+                        li.tab.col.s4
+                            a(href="#details") More Details
+                        li.tab.col.s4
+                            a(href="#settings") Settings
+                    div.col.s12#basic
+                        div.row
+                            div.input-field.col.s12
+                                i.material-icons.prefix mode_edit
+                                input.validate#name(type="text" required)
+                                label(for="name") Name of your event
+                            div.input-field.col.s12
+                                i.material-icons.prefix date_range
+                                input.datepicker#date(type="date")
+                                label(for="date") What date is it?
+                            div.input-field.col.s6
+                                i.material-icons.prefix access_time
+                                input.validate#timeStart(type="text" required pattern="(1[012]|[1-9]):[0-5][0-9] *(a|A|p|P)(m|M)")
+                                label(for="time" data-error="Please enter a valid time") When does it start?
+                            div.input-field.col.s6
+                                i.material-icons.prefix access_time
+                                input.validate#timeEnd(type="text" required pattern="(1[012]|[1-9]):[0-5][0-9] *(a|A|p|P)(m|M)")
+                                label(for="time" data-error="Please enter a valid time") When is it over?
+                            div.input-field.col.s12
+                                i.material-icons.prefix event_note
+                                textarea.materialize-textarea#description(type="text")
+                                label(for="description") Describe your event.
+                    div.col.s12#details
+                        div.row
+                            div.input-field.col.s12
+                                textarea.materialize-textarea#description(type="text")
+                                label(for="description") Describe your event.
+                    div.col.s12#settings
+                        div.row
+                            div.input-field.col.s12
+                                textarea.materialize-textarea#description(type="text")
+                                label(for="description") Describe your event.
         div.modal-footer
             - var modalButtonClasses = "modal-action btn-flat waves-effect waves-dark"
             a(class=modalButtonClasses) Submit
