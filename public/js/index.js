@@ -11,7 +11,7 @@ $(document).ready(function(){
         $(this).trigger("mouseleave");
     });
     $('.modal-trigger').leanModal();
-    
+
     $('.datepicker').pickadate({
         weekdaysShort: ['S', 'M', 'T', 'W', 'T', 'F', 'S'],
         today: 'TODAY',

@@ -16,11 +16,11 @@ router.get('/ajax/getBannerImages', function(req, res, next) {
                 console.log("Error");
                 console.log(err);
             }
-            res.send(results);
+            res.send(results.map(function(elem){console.log(elem.tags); return {tags: elem["tags"]}}));
     });
 });
 
-// Group page
+// Group page 
 router.get(/^\/(.*)/, function(req, res, next) {
     Group.find({
             "url": req.params[0]

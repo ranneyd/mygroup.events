@@ -20,7 +20,7 @@ block content
         div.col.s12.m10.offset-m1.l8.offset-l2
             div.card.hoverable
                 div.card-image
-                    img.activator(src="images/banners/sports.png")
+                    img.activator(src="images/banners/art.png")
                 div.card-content
                     span.card-title.activator Soccer<i class="material-icons right">more_vert</i>
                     p Let's play some soccer
@@ -66,10 +66,22 @@ block content
                                 textarea.materialize-textarea#description(name="description" type="text")
                                 label(for="description") Describe your event.
                     div.col.s12#bannerTab
-                        div.row
-                            div.input-field.col.s12
-                                textarea.materialize-textarea#description(type="text")
-                                label(for="description") Describe your event.
+                       div.row#banner-loading
+                            div.col.s12.center
+                                div.preloader-wrapper.big.active.banner-
+                                    div.spinner-layer.spinner-yellow-only
+                                        div.circle-clipper.left
+                                            div.circle
+                                        div.gap-patch
+                                            div.circle
+                                        div.circle-clipper.right
+                                            div.circle
+                        div.row#banner-row
+                            div.col.s12.center-align
+                                img.z-depth-3.banner-preview(src="images/banners/lights.png")
+                            div.input-field.col.s10.offset-s1
+                                select.icons#banner-picker(name="banner-picker")
+                                label(for="banner-picker") Pick a banner image
                     div.col.s12#detailsTab
                         div.row
                             div.input-field.col.s6
@@ -100,8 +112,34 @@ block scripts
         // under it. However, the modal animates in, and if it hasn't animated in, the
         // click will register a weird size, so wait a few millis after it's been clicked
         // to do it.
+        //
+        // Also, we have to AJAX the list of banners. 
         $("#add-event-trigger").click(function(){
             setTimeout(function(){
                 $("#basicInfoTab").trigger("click");
             },200);
+
+            $.get("ajax/getBannerImages", function( data ) {
+                data.sort(function( a, b ) {
+                    return a.name > b.name;
+                }).forEach(function(val){
+                    console.log(val);
+                    $("#banner-picker").append(
+                        $("<option>").attr("value", val.url)
+                            .attr("data-icon", "images/banners/icons/" + val.url)
+                            .attr("selected", val.url === "lights.png"? '': false)
+                            .html(val.name)
+                    );
+                });
+                $('#banner-picker').material_select();
+
+                $("#banner-loading").hide();
+                $("#banner-row").show();
+            });
         });
+
+        $("#banner-picker").change(function(){
+            $(".banner-preview").attr("src", "images/banners/" +$(this).val());
+        });
+
+        $("#banner-row").hide();
