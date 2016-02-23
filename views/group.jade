@@ -7,7 +7,7 @@ block content
         div.col.s12.m10.offset-m1.l8.offset-l2
             div.card.hoverable
                 div.card-image
-                    img.activator(src="images/beach.png")
+                    img.activator(src="images/banners/beach.png")
                 div.card-content
                     span.card-title.activator Beach<i class="material-icons right">more_vert</i>
                     p Let's go to the beach
@@ -20,7 +20,7 @@ block content
         div.col.s12.m10.offset-m1.l8.offset-l2
             div.card.hoverable
                 div.card-image
-                    img.activator(src="images/sports.png")
+                    img.activator(src="images/banners/sports.png")
                 div.card-content
                     span.card-title.activator Soccer<i class="material-icons right">more_vert</i>
                     p Let's play some soccer
@@ -38,12 +38,12 @@ block content
                 form.col.s12#newEvent(method="post" action=currentUrl + "/new")
                     ul.tabs
                         li.tab.col.s4
-                            a.active(href="#basic") Basic Info
+                            a.active#basicInfoTab(href="#basicTab") Basic Info
                         li.tab.col.s4
-                            a(href="#details") More Details
+                            a(href="#bannerTab") Banner
                         li.tab.col.s4
-                            a(href="#settings") Settings
-                    div.col.s12#basic
+                            a(href="#detailsTab") Details
+                    div.col.s12#basicTab
                         div.row
                             div.input-field.col.s12
                                 i.material-icons.prefix mode_edit
@@ -51,7 +51,7 @@ block content
                                 label(for="name") Name of your event
                             div.input-field.col.s12
                                 i.material-icons.prefix date_range
-                                input.datepicker#date(name="date" type="date")
+                                input.datepicker#date(name="date" type="date" required)
                                 label(for="date") What date is it?
                             div.input-field.col.s6
                                 i.material-icons.prefix access_time
@@ -65,16 +65,25 @@ block content
                                 i.material-icons.prefix event_note
                                 textarea.materialize-textarea#description(name="description" type="text")
                                 label(for="description") Describe your event.
-                    div.col.s12#details
+                    div.col.s12#bannerTab
                         div.row
                             div.input-field.col.s12
                                 textarea.materialize-textarea#description(type="text")
                                 label(for="description") Describe your event.
-                    div.col.s12#settings
+                    div.col.s12#detailsTab
                         div.row
-                            div.input-field.col.s12
-                                textarea.materialize-textarea#description(type="text")
-                                label(for="description") Describe your event.
+                            div.input-field.col.s6
+                                h5 How to Display RSVPs
+                                p
+                                    input#anonymous(name="rsvp" type="radio" value="anonymous" checked)
+                                    label(for="anonymous") No one can see who has RSVP'd
+                                p
+                                    input#onlyme(name="rsvp" type="radio" value="onlyme")
+                                    label(for="onlyme") Only I can see who has RSVP'd
+                                p
+                                    input#everyone(name="rsvp" type="radio" value="everyone")
+                                    label(for="everyone") Everyone can see who has RSVP'd
+                        div.row
         div.modal-footer
             - var modalButtonClasses = "modal-action btn-flat waves-effect waves-dark"
             a#newEventButton(class=modalButtonClasses) Submit
@@ -84,4 +93,15 @@ block scripts
     script(type="text/javascript").
         $("#newEventButton").click(function(){
             $("#newEvent").submit();
-        })
+        });
+
+        // The tab indicator isn't on when the modal opens, so we need to hack it a bit
+        // When we click on the modal launcher, "click" on the first tab to put the indicator
+        // under it. However, the modal animates in, and if it hasn't animated in, the
+        // click will register a weird size, so wait a few millis after it's been clicked
+        // to do it.
+        $("#add-event-trigger").click(function(){
+            setTimeout(function(){
+                $("#basicInfoTab").trigger("click");
+            },200);
+        });
