@@ -1,2 +1,2 @@
 start mongo.bat
-start nodemon --exec "npm start"
+start server.bat
