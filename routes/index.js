@@ -16,7 +16,7 @@ router.get('/ajax/getBannerImages', function(req, res, next) {
                 console.log("Error");
                 console.log(err);
             }
-            res.send(results.map(function(elem){console.log(elem.tags); return {tags: elem["tags"]}}));
+            res.send(results);
     });
 });
 
