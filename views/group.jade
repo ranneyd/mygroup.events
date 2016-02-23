@@ -7,7 +7,7 @@ block content
         div.col.s12.m10.offset-m1.l8.offset-l2
             div.card.hoverable
                 div.card-image
-                    img.activator(src="images/beachbanner.png")
+                    img.activator(src="images/banners/beach.png")
                 div.card-content
                     span.card-title.activator Beach<i class="material-icons right">more_vert</i>
                     p Let's go to the beach
@@ -16,59 +16,178 @@ block content
                     p More information
                 div.card-action
                     a RSVP
+    div.row
+        div.col.s12.m10.offset-m1.l8.offset-l2
+            div.card.hoverable
+                div.card-image
+                    img.activator(src="images/banners/art.png")
+                div.card-content
+                    span.card-title.activator Soccer<i class="material-icons right">more_vert</i>
+                    p Let's play some soccer
+                div.card-reveal
+                    span.card-title Soccer<i class="material-icons right">close</i>
+                    p More information
+                div.card-action
+                    a RSVP
     div.modal.modal-fixed-footer#add-event
         div.modal-content
             h4
                 | Add a new event 
                 i.material-icons.right.modal-close close
-            div.row
-                form.col.s12#newEvent(method="post" action=currentUrl + "/new")
-                    ul.tabs
-                        li.tab.col.s4
-                            a.active(href="#basic") Basic Info
-                        li.tab.col.s4
-                            a(href="#details") More Details
-                        li.tab.col.s4
-                            a(href="#settings") Settings
-                    div.col.s12#basic
-                        div.row
-                            div.input-field.col.s12
-                                i.material-icons.prefix mode_edit
-                                input.validate#name(name="name" type="text" required)
-                                label(for="name") Name of your event
-                            div.input-field.col.s12
-                                i.material-icons.prefix date_range
-                                input.datepicker#date(name="date" type="date")
-                                label(for="date") What date is it?
-                            div.input-field.col.s6
-                                i.material-icons.prefix access_time
-                                input.validate#timeStart(name="timeStart" type="text" required pattern="(1[012]|[1-9]):[0-5][0-9] *(a|A|p|P)(m|M)")
-                                label(for="time" data-error="Please enter a valid time") When does it start?
-                            div.input-field.col.s6
-                                i.material-icons.prefix access_time
-                                input.validate#timeEnd(name="timeEnd" type="text" required pattern="(1[012]|[1-9]):[0-5][0-9] *(a|A|p|P)(m|M)")
-                                label(for="time" data-error="Please enter a valid time") When is it over?
-                            div.input-field.col.s12
-                                i.material-icons.prefix event_note
-                                textarea.materialize-textarea#description(name="description" type="text")
-                                label(for="description") Describe your event.
-                    div.col.s12#details
-                        div.row
-                            div.input-field.col.s12
-                                textarea.materialize-textarea#description(type="text")
-                                label(for="description") Describe your event.
-                    div.col.s12#settings
-                        div.row
-                            div.input-field.col.s12
-                                textarea.materialize-textarea#description(type="text")
-                                label(for="description") Describe your event.
+            form.col.s12#newEvent(method="post" action=currentUrl + "/new")
+                ul.tabs
+                    li.tab.col.s4
+                        a.active#basicInfoTab(href="#basicTab") Basic Info
+                    li.tab.col.s4
+                        a#bannerTabButton(href="#bannerTab") Banner
+                    li.tab.col.s4
+                        a#detailsTabButton(href="#detailsTab") Details
+                div.col.s12#basicTab
+                    div.row
+                        div.input-field.col.s12
+                            i.material-icons.prefix mode_edit
+                            input.validate#name(name="name" type="text" required)
+                            label(for="name") Name of your event
+                        div.input-field.col.s12
+                            i.material-icons.prefix date_range
+                            input.datepicker#date(name="date" type="date" required)
+                            label(for="date") What date is it?
+                        div.input-field.col.s6
+                            i.material-icons.prefix access_time
+                            input.validate#timeStart(name="timeStart" type="text" required pattern="(1[012]|[1-9]):[0-5][0-9] *(a|A|p|P)(m|M)")
+                            label(for="time" data-error="Please enter a valid time") When does it start?
+                        div.input-field.col.s6
+                            i.material-icons.prefix access_time
+                            input.validate#timeEnd(name="timeEnd" type="text" required pattern="(1[012]|[1-9]):[0-5][0-9] *(a|A|p|P)(m|M)")
+                            label(for="time" data-error="Please enter a valid time") When is it over?
+                        div.input-field.col.s12
+                            i.material-icons.prefix event_note
+                            textarea.materialize-textarea#description(name="description" type="text")
+                            label(for="description") Describe your event.
+                div.col.s12#bannerTab
+                   div.row#banner-loading.margin-top
+                        div.col.s12.center
+                            div.preloader-wrapper.big.active.banner-
+                                div.spinner-layer.spinner-yellow-only
+                                    div.circle-clipper.left
+                                        div.circle
+                                    div.gap-patch
+                                        div.circle
+                                    div.circle-clipper.right
+                                        div.circle
+                    div.row#banner-row
+                        div.col.s12.center-align
+                            img.z-depth-3.banner-preview(src="images/banners/lights.png")
+                        div.input-field.col.s10.offset-s1.margin-top
+                            select.icons#banner-picker(name="banner-picker")
+                            label(for="banner-picker") Pick a banner image
+                        div.col.s3.offset-s1
+                            p Or upload your own image
+
+                        div.file-field.input-field.col.s7
+                            div.btn
+                                span File
+                                input(type="file")
+                            div.file-path-wrapper
+                                input.file-path.validate(type="text" placeholder="Upload an image")
+                div.col.s12#detailsTab
+                    div.row
+                        div.input-field.col.s6
+                            h5 How to Display RSVPs
+                            p
+                                input#anonymous(name="rsvp" type="radio" value="anonymous" checked)
+                                label(for="anonymous") No one can see who has RSVP'd
+                            p
+                                input#onlyme(name="rsvp" type="radio" value="onlyme")
+                                label(for="onlyme") Only I can see who has RSVP'd
+                            p
+                                input#everyone(name="rsvp" type="radio" value="everyone")
+                                label(for="everyone") Everyone can see who has RSVP'd
+                    div.row
         div.modal-footer
             - var modalButtonClasses = "modal-action btn-flat waves-effect waves-dark"
-            a#newEventButton(class=modalButtonClasses) Submit
-            a.modal-close.left(class=modalButtonClasses) Close
+            a#newEventButton(class=modalButtonClasses) Next
+            a.left#newEventClose(class=modalButtonClasses) Close
 
 block scripts
     script(type="text/javascript").
         $("#newEventButton").click(function(){
-            $("#newEvent").submit();
-        })
+            if($("#basicInfoTab").hasClass("active")){
+                $("#bannerTabButton").click();
+            }
+            else if($("#bannerTabButton").hasClass("active")){
+                $("#detailsTabButton").click();
+            }
+            else {
+                $("#newEvent").submit();
+            }
+        });
+
+        $("#newEventClose").click(function(){
+            if($("#basicInfoTab").hasClass("active")){
+                $("#add-event").closeModal();
+            }
+            else if($("#bannerTabButton").hasClass("active")){
+                $("#basicInfoTab").click();
+            }
+            else {
+                $("#bannerTabButton").click();
+            }
+        });
+
+        $("li.tab a").click(function(){
+            if($(this).attr("id") === "basicInfoTab") {
+                $("#newEventClose").html("Close");
+            }
+            else{
+                $("#newEventClose").html("Back");
+            }
+            if($(this).attr("id") === "detailsTabButton") {
+                $("#newEventButton").html("Submit");
+            }
+            else{
+                $("#newEventButton").html("Next");
+            }
+        });
+
+        // The tab indicator isn't on when the modal opens, so we need to hack it a bit
+        // When we click on the modal launcher, "click" on the first tab to put the indicator
+        // under it. However, the modal animates in, and if it hasn't animated in, the
+        // click will register a weird size, so wait a few millis after it's been clicked
+        // to do it.
+        //
+        // Also, we have to AJAX the list of banners. 
+        $("#add-event-trigger").click(function(){
+            setTimeout(function(){
+                $("#basicInfoTab").trigger("click");
+            },200);
+
+            $.get("ajax/getBannerImages", function( data ) {
+                var newData = data.sort(function( a, b ) {
+                    if(a.name[0] < b.name[0])
+                        return -1;
+                    if(a.name[0] > b.name[0])
+                        return 1;
+                    else
+                        return 0; 
+                });
+                newData.forEach(function(val){
+                    $("#banner-picker").append(
+                        $("<option>").attr("value", val.url)
+                            .attr("data-icon", "images/banners/icons/" + val.url)
+                            .attr("selected", val.url === "lights.png"? '': false)
+                            .html(val.name[0])
+                    );
+                });
+                $('#banner-picker').material_select();
+
+                $("#banner-loading").hide();
+                $("#banner-row").show();
+            });
+        });
+
+        $("#banner-picker").change(function(){
+            $(".banner-preview").attr("src", "images/banners/" +$(this).val());
+        });
+
+        $("#banner-row").hide();

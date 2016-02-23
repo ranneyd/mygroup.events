@@ -1,14 +1,26 @@
 var express = require('express');
 var router = express.Router();
 var Group = require('../models/group.js');
+var Banner = require('../models/banner.js');
 
 
 /* GET home page. */
 router.get('/', function(req, res, next) {
     res.render('index', { title: 'Ravie' });
 });
+router.get('/ajax/getBannerImages', function(req, res, next) {
+    Banner.find(
+        {},
+        function(err, results){
+            if (err) {
+                console.log("Error");
+                console.log(err);
+            }
+            res.send(results);
+    });
+});
 
-// Group page
+// Group page 
 router.get(/^\/(.*)/, function(req, res, next) {
     Group.find({
             "url": req.params[0]

@@ -15,7 +15,7 @@ mixin nav-list(dropdownID, mobile)
                     if mobile
                         | Calendar view
         li
-            a.modal-trigger(class=aClasses href="#add-event" data-tooltip=(mobile ? false : "Add a new event"))&attributes(mobile ? false : hoverAttributes)
+            a.modal-trigger#add-event-trigger(class=aClasses href="#add-event" data-tooltip=(mobile ? false : "Add a new event"))&attributes(mobile ? false : hoverAttributes)
                 i.material-icons(class=(mobile ? 'left' : false)) add
                 if mobile
                     | Add a new event
