@@ -1,0 +1,1 @@
+"C:\Program Files\MongoDB\Server\3.2\bin\mongodump.exe" --host localhost:27017 --out %homepath%\Documents\Github\ravie\mongo-backup
