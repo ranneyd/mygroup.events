@@ -35,7 +35,9 @@ banner("Museum", "trex.png", ["natural", "history", "museum", "science"]);
 banner("Video Games", "xbox.png", ["xbox", "video", "games"]);
 banner("Yoga", "yoga.png", ["yoga", "lesson", "exercise"]);
 banner("Zoo", "zoo.png", ["animals", "zoo", "outside", "outdoors"]);
-
-
-
+banner("Lights", "lights.png", ["lights", "default"]);
+banner("Art", "art.png", ["art", "lesson", "creative"]);
+banner("Art Museum", "artmuseum.png", ["art", "museum"]);
+banner("Bar", "bar.png", ["bar", "drinks", "party"]);
+banner("Beach", "beach.png", ["beach", "ocean", "outside", "outdoors", "swim"]);
 

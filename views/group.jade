@@ -30,11 +30,11 @@ block content
                 div.card-action
                     a RSVP
     div.modal.modal-fixed-footer#add-event
-        div.modal-content
+        div.modal-content.flex-box-fill
             h4
                 | Add a new event 
                 i.material-icons.right.modal-close close
-            form.col.s12#newEvent(method="post" action=currentUrl + "/new")
+            form.flex-box-fill.col.s12#newEvent(method="post" action=currentUrl + "/new")
                 ul.tabs
                     li.tab.col.s4
                         a.active#basicInfoTab(href="#basicTab") Basic Info
@@ -75,23 +75,31 @@ block content
                                         div.circle
                                     div.circle-clipper.right
                                         div.circle
-                    div.row#banner-row
+                    div.row.no-margin-bottom#banner-row
                         div.col.s12.center-align
                             img.z-depth-3.banner-preview(src="images/banners/lights.png")
                         div.input-field.col.s10.offset-s1.margin-top
                             select.icons#banner-picker(name="banner-picker")
                             label(for="banner-picker") Pick a banner image
-                        div.col.s3.offset-s1
-                            p Or upload your own image
-
-                        div.file-field.input-field.col.s7
+                        div.file-field.col.s10.offset-s1
+                            p.lean Or upload your own image
                             div.btn
                                 span File
                                 input(type="file")
                             div.file-path-wrapper
                                 input.file-path.validate(type="text" placeholder="Upload an image")
-                div.col.s12#detailsTab
-                    div.row
+                div.flex-box-fill.col.s12#detailsTab
+                    div.flex1.flex.row.no-margin-bottom
+                        div.flex-box-fill.col.s6
+                            h5 Location
+                            div.row
+                                div.input-field.col.s12
+                                    input#location(name="location" type="text")
+                                    label(for='location') Where is your event?
+                                div.col.s12
+                                    a.waves-effect.waves-light.btn#enter-location Show me on the map
+                            div.flex-box-fill.s12.video-container
+                                iframe.flex1.map(allowfullscreen frameborder="0" src="https://www.google.com/maps/embed/v1/view?zoom=3&center=37.0902,-95.7129&key=AIzaSyA_pbDU2WPMoChRE2oFhjJVNJHPI5-1Ewg" )
                         div.input-field.col.s6
                             h5 How to Display RSVPs
                             p
@@ -103,7 +111,7 @@ block content
                             p
                                 input#everyone(name="rsvp" type="radio" value="everyone")
                                 label(for="everyone") Everyone can see who has RSVP'd
-                    div.row
+                    
         div.modal-footer
             - var modalButtonClasses = "modal-action btn-flat waves-effect waves-dark"
             a#newEventButton(class=modalButtonClasses) Next
@@ -157,7 +165,7 @@ block scripts
         // to do it.
         //
         // Also, we have to AJAX the list of banners. 
-        $("#add-event-trigger").click(function(){
+        $(".add-event-trigger").click(function(){
             setTimeout(function(){
                 $("#basicInfoTab").trigger("click");
             },200);
