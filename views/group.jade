@@ -92,13 +92,14 @@ block content
                     div.flex1.flex.row.no-margin-bottom
                         div.flex-box-fill.col.s6
                             h5 Location
-                            div.row
+                            div.row.no-margin-bottom
                                 div.input-field.col.s12
+                                    i.material-icons.prefix add_location
                                     input#location(name="location" type="text")
                                     label(for='location') Where is your event?
                                 div.col.s12
                                     a.waves-effect.waves-light.btn#enter-location Show me on the map
-                            div.flex-box-fill.s12.video-container
+                            div.flex-box-fill.video-container
                                 iframe.flex1.map(allowfullscreen frameborder="0" src="https://www.google.com/maps/embed/v1/view?zoom=3&center=37.0902,-95.7129&key=AIzaSyA_pbDU2WPMoChRE2oFhjJVNJHPI5-1Ewg" )
                         div.input-field.col.s6
                             h5 How to Display RSVPs
@@ -199,3 +200,9 @@ block scripts
         });
 
         $("#banner-row").hide();
+
+        $("#enter-location").click(function(){
+            var API_KEY = "AIzaSyA_pbDU2WPMoChRE2oFhjJVNJHPI5-1Ewg";
+            var modifiedLocation = $("#location").val().replace(/[^a-zA-Z0-9-]/g, "").split(" ").join("+");
+            $(".map").attr("src", "https://www.google.com/maps/embed/v1/place?q="+modifiedLocation+"&key=" + API_KEY)
+        });
