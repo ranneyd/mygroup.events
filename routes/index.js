@@ -52,7 +52,7 @@ router.post(/^\/(.*)\/new/, function(req, res, next) {
         date: req.body.date,
         timeStart: req.body.timeStart,
         timeEnd: req.body.timeEnd,
-        description: req.body.description,
+        description: req.body.description.replace(/\n/g, "<br>"),
         banner: req.body['banner-picker'],
         location: req.body.location,
         rsvp: req.body.rsvp,
@@ -70,8 +70,18 @@ router.post(/^\/(.*)\/new/, function(req, res, next) {
 });
 
 router.get(/^\/(.*)\/getEvents/, function(req, res, next) {
+    var today = new Date("2/28/2016");
     Event.find({
-            group: req.params[0]
+            group: req.params[0],
+            $and: [
+                {$or: [
+                    {date: {$gt: today}},
+                    {$and: [
+                        {date: {$gte: today}},
+                        {timeEnd: {$gte: "11:00 PM"}}
+                    ]}
+                ]}
+            ]
         }).exec(function(err, events){
             if (err) {
                 console.log("Error");
