@@ -3,38 +3,12 @@ extends layout
 block navbar
     include navbar
 block content
-    div.row
-        div.col.s12.m10.offset-m1.l8.offset-l2
-            div.card.hoverable
-                div.card-image
-                    img.activator(src="images/banners/beach.png")
-                div.card-content
-                    span.card-title.activator Beach<i class="material-icons right">more_vert</i>
-                    p Let's go to the beach
-                div.card-reveal
-                    span.card-title Beach<i class="material-icons right">close</i>
-                    p More information
-                div.card-action
-                    a RSVP
-    div.row
-        div.col.s12.m10.offset-m1.l8.offset-l2
-            div.card.hoverable
-                div.card-image
-                    img.activator(src="images/banners/art.png")
-                div.card-content
-                    span.card-title.activator Soccer<i class="material-icons right">more_vert</i>
-                    p Let's play some soccer
-                div.card-reveal
-                    span.card-title Soccer<i class="material-icons right">close</i>
-                    p More information
-                div.card-action
-                    a RSVP
     div.modal.modal-fixed-footer#add-event
         div.modal-content.flex-box-fill
             h4
                 | Add a new event 
                 i.material-icons.right.modal-close close
-            form.flex-box-fill.col.s12#newEvent(method="post" action=currentUrl + "/new")
+            form.flex-box-fill.col.s12#newEvent(method="post" action="/" + currentUrl + "/new")
                 input(type="hidden" value=currentUrl name="group")
                 ul.tabs
                     li.tab.col.s4
@@ -56,11 +30,11 @@ block content
                         div.input-field.col.s6
                             i.material-icons.prefix access_time
                             input.validate#timeStart(name="timeStart" type="text" required pattern="(1[012]|[1-9]):[0-5][0-9] *(a|A|p|P)(m|M)")
-                            label(for="time" data-error="Please enter a valid time") When does it start?
+                            label(for="timeStart" data-error="Please enter a valid time") When does it start?
                         div.input-field.col.s6
                             i.material-icons.prefix access_time
                             input.validate#timeEnd(name="timeEnd" type="text" required pattern="(1[012]|[1-9]):[0-5][0-9] *(a|A|p|P)(m|M)")
-                            label(for="time" data-error="Please enter a valid time") When is it over?
+                            label(for="timeEnd" data-error="Please enter a valid time") When is it over?
                         div.input-field.col.s12
                             i.material-icons.prefix event_note
                             textarea.materialize-textarea#description(name="description" type="text")
@@ -78,7 +52,7 @@ block content
                                         div.circle
                     div.row.no-margin-bottom#banner-row
                         div.col.s12.center-align
-                            img.z-depth-3.banner-preview(src="images/banners/lights.png")
+                            img.z-depth-3.banner-preview(src="/images/banners/lights.png")
                         div.input-field.col.s10.offset-s1.margin-top
                             select.icons#banner-picker(name="banner-picker")
                             label(for="banner-picker") Pick a banner image
@@ -121,6 +95,50 @@ block content
 
 block scripts
     script(type="text/javascript").
+        var getGoogleMapsURL = function(location){
+            var API_KEY = "AIzaSyA_pbDU2WPMoChRE2oFhjJVNJHPI5-1Ewg";
+            var newLocation =  location.replace(/[^a-zA-Z0-9-]/g, "").split(" ").join("+");
+            return "https://www.google.com/maps/embed/v1/place?q=" + newLocation + "&key=" + API_KEY;
+        };
+        $.get("#{currentUrl}/getEvents", function( data ) {
+            data.forEach(function(elem){
+                var eventCard = 
+                '<div class="row">' +
+                '<div class="col s12 m10 offset-m1 l8 offset-l2">' +
+                '<div class="card hoverable">' +
+                '<div class="card-image">' +
+                '<img class="activator" src="/images/banners/' + elem.banner + '">' +
+                '</div>' +
+                '<div class="card-content">'+
+                '<span class="card-title activator">' + elem.name + 
+                '<i class="material-icons right">more_vert</i>' +
+                '</span>' +
+                '<p>' + new Date(elem.date).toLocaleString('en-US', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' }) + 
+                '<span class="right">' + elem.timeStart + ' - ' + elem.timeEnd + '</span>' +
+                '</p></div>' +
+                '<div class="card-reveal">' +
+                '<span class="card-title">'+ elem.name + 
+                '<i class="material-icons right">close</i></span>' + 
+                '<div class="row">' +
+                '<div class="col s12 l5">' +
+                '<h5>Details</h5>' + 
+                '<p>' + elem.description + '</p>' +
+                '<h5>Location</h5>' + 
+                '<p>' + elem.location + "</p>" +
+                '</div>' +
+                '<div class="col s10 l7">' + 
+                '<div class="video-container">' +
+                '<iframe class="card-map" allowfullscreen frameborder="0" src="'+getGoogleMapsURL(elem.location)+'"></iframe>' +
+                '</div></div></div></div>' +
+                '<div class="card-action">'+
+                '<a>RSVP</a>'+ 
+                '</div></div></div></div>';
+            
+                $("#content").append(eventCard);
+            });
+        });
+
+
         $("#newEventButton").click(function(){
             if($("#basicInfoTab").hasClass("active")){
                 $("#bannerTabButton").click();
@@ -172,7 +190,7 @@ block scripts
                 $("#basicInfoTab").trigger("click");
             },200);
 
-            $.get("ajax/getBannerImages", function( data ) {
+            $.get("/ajax/getBannerImages", function( data ) {
                 var newData = data.sort(function( a, b ) {
                     if(a.name[0] < b.name[0])
                         return -1;
@@ -184,7 +202,7 @@ block scripts
                 newData.forEach(function(val){
                     $("#banner-picker").append(
                         $("<option>").attr("value", val.url)
-                            .attr("data-icon", "images/banners/icons/" + val.url)
+                            .attr("data-icon", "/images/banners/icons/" + val.url)
                             .attr("selected", val.url === "lights.png"? '': false)
                             .html(val.name[0])
                     );
@@ -197,13 +215,15 @@ block scripts
         });
 
         $("#banner-picker").change(function(){
-            $(".banner-preview").attr("src", "images/banners/" +$(this).val());
+            $(".banner-preview").attr("src", "/images/banners/" +$(this).val());
         });
 
         $("#banner-row").hide();
 
         $("#enter-location").click(function(){
-            var API_KEY = "AIzaSyA_pbDU2WPMoChRE2oFhjJVNJHPI5-1Ewg";
-            var modifiedLocation = $("#location").val().replace(/[^a-zA-Z0-9-]/g, "").split(" ").join("+");
-            $(".map").attr("src", "https://www.google.com/maps/embed/v1/place?q="+modifiedLocation+"&key=" + API_KEY)
+            $(".map").attr("src", getGoogleMapsURL($("#location").val()))
+        });
+
+        $(".activator").click(function(){
+
         });

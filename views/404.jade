@@ -1,0 +1,15 @@
+extends layout
+
+block navbar
+    include navbar
+block content
+    h1 404'd
+    p.flow-text Whatever you were looking for doesn't exist. Maybe you made a typo? In any case, because of the inconvenience, here's a random cat. If you don't like that cat and you want a new one <a href="#" id="cat">click here</a>.
+    div.center-align
+        a(href="http://thecatapi.com/" target="_blank"): img#catImg(src="http://thecatapi.com/api/images/get?format=src&type=gif&size=med")
+block scripts
+    script(type="text/javascript").
+        $("#cat").click(function(){
+            console.log("cat");
+            $("#catImg").removeAttr("src").attr("src", "http://thecatapi.com/api/images/get?format=src&type=gif&timestamp" + new Date().getTime())
+        })

@@ -33,7 +33,10 @@ mixin nav-list(dropdownID, mobile)
 div.navbar-fixed
     nav.orange.lighten-1(role='navigation')
         div.nav-wrapper.container
-            a.brand-logo(href="/")=title
+            -var href = "/";
+            if group
+                -href += currentUrl;
+            a.brand-logo(href=href)=title
             a.button-collapse#mobile-menu-button(href='#' data-activates='mobile-menu'): i.material-icons menu
             ul.right.hide-on-med-and-down
                 +nav-list('user-menu')

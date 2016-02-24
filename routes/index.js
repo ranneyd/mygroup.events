@@ -16,13 +16,18 @@ router.get('/ajax/getBannerImages', function(req, res, next) {
             if (err) {
                 console.log("Error");
                 console.log(err);
+                res.redirect("/uh-oh");
             }
             res.send(results);
     });
 });
 
+router.get('/uh-oh', function(req, res, next) {
+    res.render('uh-oh', { title: "Ravie" });
+});
+
 // Group page 
-router.get(/^\/([^\/]+)/, function(req, res, next) {
+router.get(/^\/([^\/]+)\/?$/, function(req, res, next) {
     Group.find({
             "url": req.params[0]
         },
@@ -30,18 +35,18 @@ router.get(/^\/([^\/]+)/, function(req, res, next) {
             if (err) {
                 console.log("Error");
                 console.log(err);
+                res.redirect("/uh-oh");
             }
             if ( results.length ){
                 res.render('group', { title: results[0].name, group: true, currentUrl: req.params[0] });
             }
             else {
-                res.render('notfound', { title: "Ravie" });
+                res.render('404', { title: "Ravie" });
             }
     });
 });
 
 router.post(/^\/(.*)\/new/, function(req, res, next) {
-    console.log(req.body);
     var newEvent = new Event({
         name: req.body.name,
         date: req.body.date,
@@ -52,10 +57,14 @@ router.post(/^\/(.*)\/new/, function(req, res, next) {
         location: req.body.location,
         rsvp: req.body.rsvp,
         owner: "dustin",
-        group: req.group
+        group: req.body.group
     });
     newEvent.save(function(err) {
-        if (err) throw err;
+        if (err) {
+            console.log("Error");
+            console.log(err);
+            res.redirect("/uh-oh");
+        }
     });
     res.redirect("/" + req.params[0]);
 });
@@ -63,15 +72,21 @@ router.post(/^\/(.*)\/new/, function(req, res, next) {
 router.get(/^\/(.*)\/getEvents/, function(req, res, next) {
     Event.find({
             group: req.params[0]
-        }).limit(10).exec(function(err, events){
+        }).exec(function(err, events){
             if (err) {
                 console.log("Error");
                 console.log(err);
+                res.redirect("/uh-oh");
             }
             else {
                 res.send(events);
             }
         });
+});
+
+// 404
+router.get(/.+/, function(req, res, next) {
+    res.render('404', { title: "Ravie" });
 });
 
 module.exports = router;

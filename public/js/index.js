@@ -20,7 +20,7 @@ $(document).ready(function(){
         format:"mmmm d, yyyy",
         formatSubmit: 'yyyy/mm/dd',
         hiddenName: true,
-        closeOnSelect: false,
+        closeOnSelect: true,
         closeOnClear: false,
     });
     $('.timepicker').pickatime();

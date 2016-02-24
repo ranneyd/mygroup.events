@@ -12,7 +12,8 @@ var EventSchema = new Schema({
     rsvp: { type: String, required: true },
     rsvpCount: { type: Number, required: true , default: 0},
     rsvps: { type: Schema.Types.Mixed, required: true, default: []},
-    owner: { type: String, required: true }
+    owner: { type: String, required: true },
+    group: { type: String, required: true }
 });
 
 EventSchema.pre('save', function(next) {
@@ -22,6 +23,7 @@ EventSchema.pre('save', function(next) {
         event.rsvps = [];
     }
 
+    // TODO: validate and error (GRACEFULLY) if there's an error
     next();
 });
 

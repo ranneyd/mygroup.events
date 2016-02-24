@@ -1,0 +1,17 @@
+extends layout
+
+block navbar
+    include navbar
+block content
+    h1 Uh oh!
+    p.flow-text Something bad happened. Whatever you were trying to do probably didn't work. We've logged this boo-boo and we're gonna smack a bandage on it as soon as possible. Thanks, and sorry for the inconvenience!
+
+    p.flow-text Because of the inconvenience, here's a random cat. If you don't like that cat and you want a new one <a href="#" id="cat">click here</a>.
+    div.center-align
+        a(href="http://thecatapi.com/" target="_blank"): img#catImg(src="http://thecatapi.com/api/images/get?format=src&type=gif&size=med")
+block scripts
+    script(type="text/javascript").
+        $("#cat").click(function(){
+            console.log("cat");
+            $("#catImg").removeAttr("src").attr("src", "http://thecatapi.com/api/images/get?format=src&type=gif&timestamp" + new Date().getTime())
+        })
