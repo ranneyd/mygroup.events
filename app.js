@@ -16,28 +16,6 @@ mongoose.connect('mongodb://localhost:27017/ravie', function(err){
 
 var routes = require('./routes/index');
 
-
-// var testUser = new User({
-//     username: "test",
-//     password: "test"
-// });
-
-// // save user to database
-// testUser.save(function(err) {
-//     // if (err) throw err;
-
-//     // // fetch user and test password verification
-//     // User.findOne({ username: testUser.password }, function(err, user) {
-//     //     if (err) throw err;
-
-//     //     // test a matching password
-//     //     user.comparePassword(testUser.password, function(err, isMatch) {
-//     //         if (err) throw err;
-//     //         console.log(testUser.password + ':', isMatch); 
-//     //     });
-//     // });
-// });
-
 var app = express();
 
 // view engine setup

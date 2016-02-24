@@ -1,0 +1,28 @@
+var mongoose = require('mongoose'),
+    Schema = mongoose.Schema;
+
+var EventSchema = new Schema({
+    name: { type: String, required: true },
+    date: { type: Date, required: true },
+    timeStart: { type: String, required: true },
+    timeEnd: { type: String, required: true },
+    description: { type: String },
+    banner: { type: String, required: true },
+    location: { type: String, },
+    rsvp: { type: String, required: true },
+    rsvpCount: { type: Number, required: true , default: 0},
+    rsvps: { type: Schema.Types.Mixed, required: true, default: []},
+    owner: { type: String, required: true }
+});
+
+EventSchema.pre('save', function(next) {
+    var event = this;
+
+    if(event.rsvp !== "anonymous") {
+        event.rsvps = [];
+    }
+
+    next();
+});
+
+module.exports = mongoose.model('Event', EventSchema);
