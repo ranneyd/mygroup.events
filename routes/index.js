@@ -70,18 +70,18 @@ router.post(/^\/(.*)\/new/, function(req, res, next) {
 });
 
 router.get(/^\/(.*)\/getEvents/, function(req, res, next) {
-    var today = new Date("2/28/2016");
+    //var today = new Date("2/28/2016");
     Event.find({
             group: req.params[0],
-            $and: [
-                {$or: [
-                    {date: {$gt: today}},
-                    {$and: [
-                        {date: {$gte: today}},
-                        {timeEnd: {$gte: "11:00 PM"}}
-                    ]}
-                ]}
-            ]
+            // $and: [
+            //     {$or: [
+            //         {date: {$gt: today}},
+            //         {$and: [
+            //             {date: {$gte: today}},
+            //             {timeEnd: {$gte: "11:00 PM"}}
+            //         ]}
+            //     ]}
+            // ]
         }).exec(function(err, events){
             if (err) {
                 console.log("Error");

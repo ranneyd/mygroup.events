@@ -3,7 +3,7 @@ extends layout
 block navbar
     include navbar
 block content
-    div.row
+    div.row(style="display:none")#no-events
         div.col.s8.offset-s2
             p.flow-text No events coming up. <a href="#add-event" class="modal-trigger add-event-trigger">Add some!</a>
     div.modal.modal-fixed-footer#add-event
@@ -104,8 +104,8 @@ block scripts
             return "https://www.google.com/maps/embed/v1/place?q=" + newLocation + "&key=" + API_KEY;
         };
         $.get("#{currentUrl}/getEvents", function( data ) {
-            if(!data){
-
+            if( !data ){
+                $("#no-events").show();
             }
             // I could put in an else, but then I'd have to indent.
             data.forEach(function(elem){
