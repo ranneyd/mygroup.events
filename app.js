@@ -17,6 +17,7 @@ mongoose.connect('mongodb://localhost:27017/ravie', function(err){
 var routes = require('./routes/index');
 
 var app = express();
+var port = process.env.PORT || 8080;
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
@@ -58,5 +59,5 @@ app.use(function(err, req, res, next) {
     });
 });
 
-
+app.listen(port);
 module.exports = app;
