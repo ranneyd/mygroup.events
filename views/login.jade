@@ -1,0 +1,19 @@
+extends layout
+
+block navbar
+    include navbar
+block content
+    div.row
+        h1.header Login
+    div.row
+        form.col.s10.offset-s1(role="form" action="/login" method="post")
+            div.row
+                div.input-field.col.s12
+                    input#username(type="text" name="username")
+                    label(for="username") Username
+                div.input-field.col.s12
+                    input#password(type="password" name="password")
+                    label(for="password") Password
+            div.row
+                button.btn.waves-effect.waves-light(type="submit" name="action") Login
+

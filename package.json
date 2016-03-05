@@ -14,13 +14,10 @@
     "morgan": "~1.7.0",
     "serve-favicon": "~2.3.0",
     "mongoose":"~4.4.2",
-    "passport" : "~0.1.17",         
-    "passport-local" : "~0.1.6",    
-    "passport-facebook" : "~1.0.2", 
-    "passport-twitter" : "~1.0.2",  
-    "passport-google-oauth" : "~0.1.5",
+    "passport": "^0.2.1",
+    "passport-local": "^1.0.0",
+    "passport-local-mongoose": "^2.0.0",
     "connect-flash" : "~0.1.1",     
-    "bcrypt-nodejs" : "latest",
     "method-override": "~1.0.0",
     "express-session": "~1.0.0"     
   }

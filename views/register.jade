@@ -1,0 +1,87 @@
+extends layout
+
+block navbar
+    include navbar
+block content
+    div.row
+        h1.header Register
+    div.row
+        form.col.s10.offset-s1(role="form" action="/register" method="post")
+            div.row
+                div.input-field.col.s12
+                    i.material-icons.prefix#username-icon account_box
+                    div.preloader-wrapper.small.active.prefix#username-loading(style="display:none")
+                        div.spinner-layer
+                            div.circle-clipper.left
+                                div.circle
+                            div.gap-patch
+                                div.circle
+                            div.circle-clipper.right
+                                div.circle
+                    input#username(type="text" name="username" required)
+                    label(for="username") Username
+                    div.progress.hide
+                        div.indeterminate
+                div.input-field.col.s12
+                    i.material-icons.prefix email
+                    input.validate#email(type="email" name="email")
+                    label(for="email") Email Address
+                div.col.s12
+                    small: a.modal-trigger(href="#email-info") Why do you want my email address?
+                div.input-field.col.s12
+                    i.material-icons.prefix lock
+                    input.validate#password(type="password" name="password" required)
+                    label(for="password") Password
+                div.input-field.col.s12
+                    i.material-icons.prefix lock_outline
+                    input.validate#password2(type="password" name="password2" required)
+                    label(for="password2") Confirm Password
+                p.red-text.text-accent-4#error=error
+            div.row
+                button.btn.waves-effect.waves-light(type="submit" name="action") Signup
+
+
+    div.modal.bottom-sheet#email-info
+        div.modal-content
+            p.flow-text Providing your email address is optional. If you provide it, we can use it later to send you password reset links (if you hit "forgot my password") or to send you updates about events you've posted (RSVPs etc, but only if you opt-in). We will NEVER, EVER give you email address to anyone and we will NEVER, EVER send you spam. I promise; I <strong>hate</strong> spam.
+        div.modal-footer
+            button.modal-action.modal-close.waves-effect.waves-light.btn-flat(href="#!") Got it
+
+block scripts
+    script(type="text/javascript").
+        // No ES6 because web standards aren't standard :'(
+        var verifyPass = function() {
+        console.log("1: " + $("#password").val());
+        console.log("2: " + $("#password2").val());
+            if($("#password").val() !== $("#password2").val()){
+                $("#password").removeClass("valid").addClass("invalid")[0].setCustomValidity("The passwords must match");
+                $("#password2").removeClass("valid").addClass("invalid")[0].setCustomValidity("The passwords must match");
+                $("#error").html("The passwords must match.");
+            }
+            else {
+                $("#password").removeClass("invalid").addClass("valid")[0].setCustomValidity("");
+                $("#password2").removeClass("invalid").addClass("valid")[0].setCustomValidity("");
+                $("#error").html("");
+            }       
+        };
+        $("#password").keyup(verifyPass);
+        $("#password2").keyup(verifyPass);
+
+        $("#username").keyup(function(){
+            $("#username-icon").hide();
+            $("#username-loading").show();
+            $.get("/ajax/userExists/" + $(this).val().toLowerCase(), function( data ) {
+                $("#username-icon").show();
+                $("#username-loading").hide();
+                if(data){                    
+                    $("#username").addClass("invalid").removeClass("valid")[0].setCustomValidity("The username must be unique");
+                    $("#error").html("Username is taken. Pick another");
+                }
+                else{
+                    $("#username").addClass("valid").removeClass("invalid")[0].setCustomValidity("");
+                    $("#error").html("");
+                } 
+            });
+        });
+
+
