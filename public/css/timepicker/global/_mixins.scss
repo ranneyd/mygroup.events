@@ -1,0 +1,18 @@
+@mixin clockNumbers($itemCount, $circleSize, $itemSize) {
+    > * {
+        width: $itemSize;
+        height: $itemSize;
+        line-height: $itemSize;
+
+        $angle: (360 / $itemCount);
+        $rot: 0;
+
+        @for $i from 1 through $itemCount {
+            &:nth-of-type(#{$i}) {
+                transform: rotate(#{$rot}deg)  translate($circleSize / 2) rotate(-#{$rot}deg);
+            }
+
+            $rot: $rot + $angle;
+        }
+    }
+}

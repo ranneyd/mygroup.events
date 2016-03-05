@@ -1,14 +1,13 @@
-"use strict";
-
-$(document).ready(function () {
+$(document).ready(function(){
     $("#mobile-menu-button").sideNav({
         edge: "left"
     });
     $('.dropdown-button').dropdown({
-        constrain_width: false,
-        belowOrigin: true });
+        constrain_width: false, // Does not change width of dropdown to that of the activator
+        belowOrigin: true,      // Displays dropdown below the button
+    });
 
-    $(".tooltipped").click(function () {
+    $(".tooltipped").click(function(){
         $(this).trigger("mouseleave");
     });
     $('.modal-trigger').leanModal();
@@ -18,11 +17,11 @@ $(document).ready(function () {
         today: 'TODAY',
         clear: 'CLEAR',
         close: 'DONE',
-        format: "mmmm d, yyyy",
+        format:"mmmm d, yyyy",
         formatSubmit: 'yyyy/mm/dd',
         hiddenName: true,
         closeOnSelect: true,
-        closeOnClear: false
+        closeOnClear: false,
     });
     $('.picker__footer button').addClass("btn-flat");
 });

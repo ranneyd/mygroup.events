@@ -1,0 +1,21 @@
+.mtp-meridiem {
+    text-align: center;
+    margin: 0;
+    padding: 0;
+    height: 50px;
+    font-size: 14px;
+    text-transform: uppercase;
+    
+    span {
+        padding: 10px;
+        margin: 0 20px;
+        border-radius: 50%;
+        line-height: 50px;
+
+        &:hover:not(.mtp-clock--active) {
+            background-color: $c-primary-light;
+            color: $c-primary-text;
+            cursor: pointer;
+        }
+    }
+}
