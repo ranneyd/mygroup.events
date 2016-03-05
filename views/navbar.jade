@@ -26,9 +26,8 @@ mixin nav-list(dropdownID, mobile)
             if mobile
                     | My Account
         ul.dropdown-content(id=dropdownID)
-            li: a My Groups
-            li: a Change Password
-            li: a Logout
+            li: a(href="/login") Login
+            li: a(href="/signup") Signup
 
 div.navbar-fixed
     nav.orange.lighten-1(role='navigation')
