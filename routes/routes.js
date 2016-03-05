@@ -34,11 +34,26 @@ router.get('/login', function(req, res) {
 
 router.post('/login', function(req, res) {
     console.log("ayy");
-    passport.authenticate('local')(req, res, function(err) {
-        console.log("lmao");
-        console.log(err);
-        res.redirect(req.session.returnTo || '/');    
-    })
+    passport.authenticate('local', function(err, user, info) {
+        if(err){
+            console.log("Error");
+            console.log(err);
+            res.redirect("/uh-oh");
+        }
+        if(!user) {
+            res.render('login', { title: "Ravie", error: "Username and password combination failed."});
+        }
+        else{
+            req.logIn(user, function(err) {
+                if(err){
+                    console.log("Error");
+                    console.log(err);
+                    res.redirect("/uh-oh");
+                }
+                return res.redirect(req.session.returnTo || '/');
+            })
+        }
+    })(req, res);
 });
 
 router.get('/logout', function(req, res) {
