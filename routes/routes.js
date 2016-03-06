@@ -1,3 +1,5 @@
+'use strict';
+
 var express = require('express');
 var passport = require('passport');
 var router = express.Router();
@@ -33,7 +35,6 @@ router.get('/login', function(req, res) {
 });
 
 router.post('/login', function(req, res) {
-    console.log("ayy");
     passport.authenticate('local', function(err, user, info) {
         if(err){
             console.log("Error");
@@ -91,7 +92,8 @@ router.get('/uh-oh', function(req, res, next) {
 
 // Group page 
 router.get(/^\/([^\/]+)\/?$/, function(req, res, next) {
-    req.session.returnTo = req.path; 
+    req.session.returnTo = req.path;
+    let user = (req.user ? req.user : { username: "", email: ""}) 
     Group.find({
             "url": req.params[0]
         },
@@ -102,25 +104,54 @@ router.get(/^\/([^\/]+)\/?$/, function(req, res, next) {
                 res.redirect("/uh-oh");
             }
             if ( results.length ){
-                res.render('group', { title: results[0].name, group: true, currentUrl: req.params[0], user: req.user});
+                res.render('group', { title: results[0].name, group: true, currentUrl: req.params[0], user: user});
             }
             else {
-                res.render('404', { title: "Ravie", user : req.user });
+                res.render('404', { title: "Ravie", user: user });
             }
     });
 });
 
 router.post(/^\/(.*)\/new/, function(req, res, next) {
+    let dateStart = new Date(req.body.date);
+    let dateEnd = new Date(req.body.date);
+
+    let dateRegex = /(1[012]|[1-9]):([0-5][0-9]) ([ap]m)/;
+    let matchData;
+    if(matchData = dateRegex.exec(req.body.timeStart)){
+        // If destructing was supported I'd do this
+        // let [sGarbage, sHours, sMinutes, sAMPM, ...sRest] = dateRegex.exec(req.body.timeStart) || [];
+
+        dateStart.setHours(matchData[1] + (matchData[3] === "pm" ? 12 : 0));
+        dateStart.setMinutes(matchData[2]);        
+    }
+    else{
+        console.log("Error");
+        console.log("Invalid date for date start");
+        res.redirect("/uh-oh");
+    }
+    if(matchData = dateRegex.exec(req.body.timeEnd)){
+        // If destructing was supported I'd do this
+        // let [sGarbage, sHours, sMinutes, sAMPM, ...sRest] = dateRegex.exec(req.body.timeStart) || [];
+
+        dateEnd.setHours(matchData[1] + (matchData[3] === "pm" ? 12 : 0));
+        dateEnd.setMinutes(matchData[2]);        
+    }
+    else{
+        console.log("Error");
+        console.log("Invalid date for date end");
+        res.redirect("/uh-oh");
+    }
+
     var newEvent = new Event({
         name: req.body.name,
-        date: req.body.date,
-        timeStart: req.body.timeStart,
-        timeEnd: req.body.timeEnd,
+        dateStart: dateStart,
+        dateEnd: dateEnd,
         description: req.body.description.replace(/\n/g, "<br>"),
         banner: req.body['banner-picker'],
         location: req.body.location,
         rsvp: req.body.rsvp,
-        owner: "dustin",
+        owner: req.user.username || "anonymous",
         group: req.body.group
     });
     newEvent.save(function(err) {
@@ -134,14 +165,17 @@ router.post(/^\/(.*)\/new/, function(req, res, next) {
 });
 
 router.get(/^\/(.*)\/getEvents/, function(req, res, next) {
-    //var today = new Date("2/28/2016");
+    if(req.query.after){
+        var after = new Date(req.query.after);
+    }
+    var today = new Date();
     Event.find({
             group: req.params[0],
             // $and: [
             //     {$or: [
-            //         {date: {$gt: today}},
+            //         {date: {$gt: after || new Date()}},
             //         {$and: [
-            //             {date: {$gte: today}},
+            //             {date: {$gte: after || new Date()}},
             //             {timeEnd: {$gte: "11:00 PM"}}
             //         ]}
             //     ]}
