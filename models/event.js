@@ -3,9 +3,8 @@ var mongoose = require('mongoose'),
 
 var EventSchema = new Schema({
     name: { type: String, required: true },
-    date: { type: Date, required: true },
-    timeStart: { type: String, required: true },
-    timeEnd: { type: String, required: true },
+    dateStart: { type: Date, required: true },
+    dateEnd: { type: Date, required: true },
     description: { type: String },
     banner: { type: String, required: true },
     location: { type: String, },
