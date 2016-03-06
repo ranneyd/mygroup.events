@@ -73,9 +73,9 @@ const template = `
                 </ul>
             </div><!-- END .mtp-clock -->
             <div class="mtp-actions">
-                <button type="button" class="mtp-actions__button mtp-actions__cancel">Cancel</button>
-                <button type="button" class="mtp-actions__button mtp-actions__back" style="display:none">Back</button>
-                <button type="button" class="mtp-actions__button mtp-actions__ok">OK</button>
+                <button type="button" class="mtp-actions__button mtp-actions__cancel waves-effect waves-light">Cancel</button>
+                <button type="button" class="mtp-actions__button mtp-actions__back waves-effect waves-light" style="display:none">Back</button>
+                <button type="button" class="mtp-actions__button mtp-actions__ok waves-effect waves-light">OK</button>
             </div><!-- END .mtp-actions -->
         </div><!-- END .mtp-picker -->
     </div><!-- END .mtp-wrapper -->
