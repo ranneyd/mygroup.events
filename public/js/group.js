@@ -68,6 +68,13 @@ $("#timeEnd").on('focusin', timePicker);
 $("#timeStart").on("input", timePickerValidator);
 $("#timeEnd").on("input", timePickerValidator);
 
+$("#date").on("change", function () {
+    console.log("lmao");
+    if ($(this).val() !== "" && $(this).hasClass("invalid")) {
+        $(this).removeClass("invalid").addClass("valid");
+    }
+});
+
 var getGoogleMapsURL = function getGoogleMapsURL(location) {
     var API_KEY = "AIzaSyA_pbDU2WPMoChRE2oFhjJVNJHPI5-1Ewg";
     var newLocation = location.replace(/[^a-zA-Z0-9-]/g, "").split(" ").join("+");
@@ -121,7 +128,21 @@ $("#newEventButton").click(function () {
             $("#error").html(error);
             $("#basicInfoTab").click();
         } else {
-            $("#newEvent").submit();
+            $("#detailsTab input").each(function (index) {
+                if ($(this).hasClass("invalid")) {
+                    error = $("#error").html();
+                }
+                if ($(this).val() === "" && $(this).attr("required")) {
+                    $(this).addClass("invalid");
+                    error = "Red fields are required";
+                }
+            });
+            if (error) {
+                $("#error-details").html(error);
+                $("#detailsTab").click();
+            } else {
+                $("#newEvent").submit();
+            }
         }
     }
 });
@@ -149,8 +170,9 @@ $("li.tab a").click(function () {
     }
 });
 
-$(".add-event-trigger").click(function () {
+$(".add-event-trigger").click(function (event) {
     if (user === "") {
+        event.preventDefault();
         window.location.replace("/login");
     }
     setTimeout(function () {

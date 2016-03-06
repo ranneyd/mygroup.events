@@ -74,24 +74,28 @@ block content
                             div.row.no-margin-bottom
                                 div.input-field.col.s12
                                     i.material-icons.prefix add_location
-                                    input#location(name="location" type="text")
+                                    input.validate#location(name="location" type="text" required)
                                     label(for='location') Where is your event?
                                 div.col.s12
                                     a.waves-effect.waves-light.btn#enter-location Show me on the map
                             div.flex-box-fill.video-container
                                 iframe.flex1.map(allowfullscreen frameborder="0" src="https://www.google.com/maps/embed/v1/view?zoom=3&center=37.0902,-95.7129&key=AIzaSyA_pbDU2WPMoChRE2oFhjJVNJHPI5-1Ewg" )
                         div.input-field.col.s6
-                            h5 How to Display RSVPs
-                            p
-                                input#anonymous(name="rsvp" type="radio" value="anonymous" checked)
-                                label(for="anonymous") No one can see who has RSVP'd
-                            p
-                                input#onlyme(name="rsvp" type="radio" value="onlyme")
-                                label(for="onlyme") Only I can see who has RSVP'd
-                            p
-                                input#everyone(name="rsvp" type="radio" value="everyone")
-                                label(for="everyone") Everyone can see who has RSVP'd
-                    
+                            div.row
+                                div.col.s12
+                                    h5 How to Display RSVPs
+                                    p
+                                        input#anonymous(name="rsvp" type="radio" value="anonymous" checked)
+                                        label(for="anonymous") No one can see who has RSVP'd
+                                    p
+                                        input#onlyme(name="rsvp" type="radio" value="onlyme")
+                                        label(for="onlyme") Only I can see who has RSVP'd
+                                    p
+                                        input#everyone(name="rsvp" type="radio" value="everyone")
+                                        label(for="everyone") Everyone can see who has RSVP'd
+                            div.row
+                                div.col.s12
+                                    p.red-text.text-accent-4#error-details=error
         div.modal-footer
             - var modalButtonClasses = "modal-action btn-flat waves-effect waves-dark"
             a#newEventButton(class=modalButtonClasses) Next
