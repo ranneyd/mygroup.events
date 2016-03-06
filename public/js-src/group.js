@@ -1,29 +1,57 @@
 var timePicker = event => {
     TimePicker.openOnInput(event.target);
-    $(event.target).trigger("focusin");
-
-    // Make sure end happens after start
-    let compTimes = (start, end) => {
-        let dateRegex = /(1[012]|[1-9]):([0-5][0-9]) ([ap]m)/;
-        let [garbage, sHours, sMinutes, sAMPM, ...rest] = dateRegex.exec(start);
-        let [garbage, eHours, eMinutes, eAMPM, ...rest] = dateRegex.exec(end);
-        
-    };
-
-    // if($("#password").val() !== $("#password2").val()) {
-    //     $("#password").removeClass("valid").addClass("invalid")[0].setCustomValidity("The passwords must match");
-    //     $("#password2").removeClass("valid").addClass("invalid")[0].setCustomValidity("The passwords must match");
-    //     $("#error").html("The passwords must match.");
-    // }
-    // else {
-    //     $("#password").removeClass("invalid").addClass("valid")[0].setCustomValidity("");
-    //     $("#password2").removeClass("invalid").addClass("valid")[0].setCustomValidity("");
-    //     $("#error").html("");
-    // }   
+    //$(event.target).trigger("focusin");
 };
 
-$("#timeStart").on('click', timePicker);
-$("#timeEnd").on('click', timePicker);
+var timePickerValidator = () => {
+    // Make sure end happens after start
+    let compTimes = (start, end) => {
+        if(!(start && end)){
+            return false;
+        }
+        let dateRegex = /(1[012]|[1-9]):([0-5][0-9]) ([ap]m)/;
+        let [sGarbage, sHours, sMinutes, sAMPM, ...sRest] = dateRegex.exec(start) || [];
+        let [eGarbage, eHours, eMinutes, eAMPM, ...eRest] = dateRegex.exec(end);
+
+        // Simplify this with boolean logic? Meh, not worth it
+        if(eAMPM === "am" && sAMPM === "pm"){
+            return false;
+        }
+        else if(eAMPM === "pm" && sAMPM === "am") {
+            return true;
+        }
+        else if(sHours > eHours){
+            return false;
+        }
+        else if(sHours < eHours) {
+            return true;
+        }
+        else if(sMinutes > eMinutes){
+            return false;
+        }
+        else {
+            return true;
+        }
+    };
+
+    if(!compTimes( $("#timeStart").val(), $("#timeEnd").val() )) {
+        let error = "End time must occur after the start time."
+        $("#timeStart").removeClass("valid").addClass("invalid")[0].setCustomValidity(error);
+        $("#timeEnd").removeClass("valid").addClass("invalid")[0].setCustomValidity(error);
+        $("#error").html(error);
+    }
+    else {
+        $("#timeStart").removeClass("invalid").addClass("valid")[0].setCustomValidity("");
+        $("#timeEnd").removeClass("invalid").addClass("valid")[0].setCustomValidity("");
+        $("#error").html("");
+    }
+}
+
+$("#timeStart").on('focusin', timePicker);
+$("#timeEnd").on('focusin', timePicker);
+
+$("#timeStart").on("input", timePickerValidator);
+$("#timeEnd").on("input", timePickerValidator);
 
 var getGoogleMapsURL = location => {
     let API_KEY = "AIzaSyA_pbDU2WPMoChRE2oFhjJVNJHPI5-1Ewg";
@@ -88,8 +116,25 @@ $("#newEventButton").click(function(){
     else if($("#bannerTabButton").hasClass("active")){
         $("#detailsTabButton").click();
     }
-    else {
-        $("#newEvent").submit();
+    else{
+        var error;
+        $("#basicTab input").each(function( index ){
+            if($(this).hasClass("invalid")) {
+                error = $("#error").html();
+            }
+            if(($(this).val() === "" && $(this).attr("required"))){
+                $(this).addClass("invalid");
+                error = "Red fields are required";
+            }
+            console.log(error);
+        })
+        if(error) {
+            $("#error").html(error);
+            $("#basicInfoTab").click();
+        }
+        else {
+            $("#newEvent").submit();
+        }
     }
 });
 

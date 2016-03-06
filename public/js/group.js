@@ -4,31 +4,69 @@ function _toArray(arr) { return Array.isArray(arr) ? arr : Array.from(arr); }
 
 var timePicker = function timePicker(event) {
     TimePicker.openOnInput(event.target);
-    $(event.target).trigger("focusin");
+};
 
+var timePickerValidator = function timePickerValidator() {
     var compTimes = function compTimes(start, end) {
+        if (!(start && end)) {
+            return false;
+        }
         var dateRegex = /(1[012]|[1-9]):([0-5][0-9]) ([ap]m)/;
 
-        var _dateRegex$exec = dateRegex.exec(start);
+        var _ref = dateRegex.exec(start) || [];
+
+        var _ref2 = _toArray(_ref);
+
+        var sGarbage = _ref2[0];
+        var sHours = _ref2[1];
+        var sMinutes = _ref2[2];
+        var sAMPM = _ref2[3];
+
+        var sRest = _ref2.slice(4);
+
+        var _dateRegex$exec = dateRegex.exec(end);
 
         var _dateRegex$exec2 = _toArray(_dateRegex$exec);
 
-        var match = _dateRegex$exec2[0];
-        var hours = _dateRegex$exec2[1];
-        var minutes = _dateRegex$exec2[2];
-        var ampm = _dateRegex$exec2[3];
+        var eGarbage = _dateRegex$exec2[0];
+        var eHours = _dateRegex$exec2[1];
+        var eMinutes = _dateRegex$exec2[2];
+        var eAMPM = _dateRegex$exec2[3];
 
-        var rest = _dateRegex$exec2.slice(4);
+        var eRest = _dateRegex$exec2.slice(4);
 
-        var endParts = dateRegex.exec(end);
-        console.log(hours);
-        console.log(minutes);
-        console.log(ampm);
+        if (eAMPM === "am" && sAMPM === "pm") {
+            return false;
+        } else if (eAMPM === "pm" && sAMPM === "am") {
+            return true;
+        } else if (sHours > eHours) {
+            return false;
+        } else if (sHours < eHours) {
+            return true;
+        } else if (sMinutes > eMinutes) {
+            return false;
+        } else {
+            return true;
+        }
     };
+
+    if (!compTimes($("#timeStart").val(), $("#timeEnd").val())) {
+        var error = "End time must occur after the start time.";
+        $("#timeStart").removeClass("valid").addClass("invalid")[0].setCustomValidity(error);
+        $("#timeEnd").removeClass("valid").addClass("invalid")[0].setCustomValidity(error);
+        $("#error").html(error);
+    } else {
+        $("#timeStart").removeClass("invalid").addClass("valid")[0].setCustomValidity("");
+        $("#timeEnd").removeClass("invalid").addClass("valid")[0].setCustomValidity("");
+        $("#error").html("");
+    }
 };
 
-$("#timeStart").on('click', timePicker);
-$("#timeEnd").on('click', timePicker);
+$("#timeStart").on('focusin', timePicker);
+$("#timeEnd").on('focusin', timePicker);
+
+$("#timeStart").on("input", timePickerValidator);
+$("#timeEnd").on("input", timePickerValidator);
 
 var getGoogleMapsURL = function getGoogleMapsURL(location) {
     var API_KEY = "AIzaSyA_pbDU2WPMoChRE2oFhjJVNJHPI5-1Ewg";
@@ -53,7 +91,23 @@ $("#newEventButton").click(function () {
     } else if ($("#bannerTabButton").hasClass("active")) {
         $("#detailsTabButton").click();
     } else {
-        $("#newEvent").submit();
+        var error;
+        $("#basicTab input").each(function (index) {
+            if ($(this).hasClass("invalid")) {
+                error = $("#error").html();
+            }
+            if ($(this).val() === "" && $(this).attr("required")) {
+                $(this).addClass("invalid");
+                error = "Red fields are required";
+            }
+            console.log(error);
+        });
+        if (error) {
+            $("#error").html(error);
+            $("#basicInfoTab").click();
+        } else {
+            $("#newEvent").submit();
+        }
     }
 });
 
