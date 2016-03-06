@@ -88,7 +88,6 @@ $.get("/" + currentUrl + "/getEvents", function (data) {
                 hours -= 12;
                 ampm = 'pm';
             }
-            hours += 1;
 
             var minutes = date.getMinutes();
             if (minutes < 10) {
@@ -117,7 +116,6 @@ $("#newEventButton").click(function () {
                 $(this).addClass("invalid");
                 error = "Red fields are required";
             }
-            console.log(error);
         });
         if (error) {
             $("#error").html(error);

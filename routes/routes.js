@@ -116,26 +116,25 @@ router.post(/^\/(.*)\/new/, function(req, res, next) {
     let dateStart = new Date(req.body.date);
     let dateEnd = new Date(req.body.date);
 
+
     let dateRegex = /(1[012]|[1-9]):([0-5][0-9]) ([ap]m)/;
     let matchData;
     if(matchData = dateRegex.exec(req.body.timeStart)){
         // If destructing was supported I'd do this
         // let [sGarbage, sHours, sMinutes, sAMPM, ...sRest] = dateRegex.exec(req.body.timeStart) || [];
-
-        dateStart.setHours(matchData[1] + (matchData[3] === "pm" ? 12 : 0));
-        dateStart.setMinutes(matchData[2]);        
+        dateStart.setHours(Number(matchData[1]) + (matchData[3] === "pm" ? 12 : 0), matchData[2]);
     }
     else{
         console.log("Error");
         console.log("Invalid date for date start");
         res.redirect("/uh-oh");
     }
+
     if(matchData = dateRegex.exec(req.body.timeEnd)){
         // If destructing was supported I'd do this
         // let [sGarbage, sHours, sMinutes, sAMPM, ...sRest] = dateRegex.exec(req.body.timeStart) || [];
 
-        dateEnd.setHours(matchData[1] + (matchData[3] === "pm" ? 12 : 0));
-        dateEnd.setMinutes(matchData[2]);        
+        dateEnd.setHours(Number(matchData[1]) + (matchData[3] === "pm" ? 12 : 0), matchData[2]);
     }
     else{
         console.log("Error");

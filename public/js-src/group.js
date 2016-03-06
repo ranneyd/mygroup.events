@@ -73,7 +73,7 @@ $.get(`/${currentUrl}/getEvents`, data => {
                 hours -= 12;
                 ampm = 'pm';
             }
-            hours += 1; // hours is 0-23, we want 1-12
+            
 
             let minutes = date.getMinutes();
             if (minutes < 10){
@@ -143,7 +143,6 @@ $("#newEventButton").click(function(){
                 $(this).addClass("invalid");
                 error = "Red fields are required";
             }
-            console.log(error);
         })
         if(error) {
             $("#error").html(error);
