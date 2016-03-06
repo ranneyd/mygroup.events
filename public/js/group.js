@@ -24,16 +24,16 @@ var timePickerValidator = function timePickerValidator() {
 
         var sRest = _ref2.slice(4);
 
-        var _dateRegex$exec = dateRegex.exec(end);
+        var _ref3 = dateRegex.exec(end) || [];
 
-        var _dateRegex$exec2 = _toArray(_dateRegex$exec);
+        var _ref4 = _toArray(_ref3);
 
-        var eGarbage = _dateRegex$exec2[0];
-        var eHours = _dateRegex$exec2[1];
-        var eMinutes = _dateRegex$exec2[2];
-        var eAMPM = _dateRegex$exec2[3];
+        var eGarbage = _ref4[0];
+        var eHours = _ref4[1];
+        var eMinutes = _ref4[2];
+        var eAMPM = _ref4[3];
 
-        var eRest = _dateRegex$exec2.slice(4);
+        var eRest = _ref4.slice(4);
 
         if (eAMPM === "am" && sAMPM === "pm") {
             return false;
@@ -74,12 +74,29 @@ var getGoogleMapsURL = function getGoogleMapsURL(location) {
     return "https://www.google.com/maps/embed/v1/place?q=" + newLocation + "&key=" + API_KEY;
 };
 $.get("/" + currentUrl + "/getEvents", function (data) {
-    if (!data) {
+    if (data.length === 0) {
         $("#no-events").show();
     }
 
     data.forEach(function (elem) {
-        var eventCard = '<div class="row">' + '<div class="col s12 m10 offset-m1 l8 offset-l2">' + '<div class="card hoverable">' + '<div class="card-image waves-effect waves-block waves-light">' + ("<img class=\"activator\" src=\"/images/banners/" + elem.banner + "\">") + '</div>' + '<div class="card-content">' + ("<span class=\"card-title activator\">" + elem.name) + '<i class="material-icons right">more_vert</i>' + '</span>' + ("<p>" + new Date(elem.date).toLocaleString('en-US', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' })) + ("<span class=\"right\">" + elem.timeStart + " - " + elem.timeEnd + "</span>") + '</p>' + '</div>' + '<div class="card-reveal">' + ("<span class=\"card-title\">" + elem.name) + '<i class="material-icons right">close</i>' + '</span>' + '<div class="row">' + '<div class="col s12 l5">' + '<h5>Details</h5>' + ("<p>" + elem.description + "</p>") + '<h5>Location</h5>' + ("<p>" + elem.location + "</p>") + '</div>' + '<div class="col s10 l7">' + '<div class="video-container">' + ("<iframe class=\"card-map\" allowfullscreen frameborder=\"0\" src=\"" + getGoogleMapsURL(elem.location) + "\"></iframe>") + '</div>' + '</div>' + '</div>' + '</div>' + '<div class="card-action">' + '<a>RSVP</a>' + '</div>' + '</div>' + '</div>' + '</div>';
+        var dateOptions = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
+        var timeFormatter = function timeFormatter(dateStr) {
+            var date = new Date(dateStr);
+            var hours = date.getHours();
+            var ampm = "am";
+            if (hours / 12 >= 1) {
+                hours -= 12;
+                ampm = 'pm';
+            }
+            hours += 1;
+
+            var minutes = date.getMinutes();
+            if (minutes < 10) {
+                minutes = "0" + minutes;
+            };
+            return hours + ":" + minutes + " " + ampm;
+        };
+        var eventCard = '<div class="row">' + '<div class="col s12 m10 offset-m1 l8 offset-l2">' + '<div class="card hoverable">' + '<div class="card-image waves-effect waves-block waves-light">' + ("<img class=\"activator\" src=\"/images/banners/" + elem.banner + "\">") + '</div>' + '<div class="card-content">' + ("<span class=\"card-title activator\">" + elem.name) + '<i class="material-icons right">more_vert</i>' + '</span>' + ("<p>" + new Date(elem.dateStart).toLocaleString('en-US', dateOptions)) + ("<span class=\"right\">" + timeFormatter(elem.dateStart) + " - " + timeFormatter(elem.dateEnd) + "</span>") + '</p>' + '</div>' + '<div class="card-reveal">' + ("<span class=\"card-title\">" + elem.name) + '<i class="material-icons right">close</i>' + '</span>' + '<div class="row">' + '<div class="col s12 l5">' + '<h5>Details</h5>' + ("<p>" + elem.description + "</p>") + '<h5>Location</h5>' + ("<p>" + elem.location + "</p>") + '</div>' + '<div class="col s10 l7">' + '<div class="video-container">' + ("<iframe class=\"card-map\" allowfullscreen frameborder=\"0\" src=\"" + getGoogleMapsURL(elem.location) + "\"></iframe>") + '</div>' + '</div>' + '</div>' + '</div>' + '<div class="card-action">' + '<a>RSVP</a>' + '</div>' + '</div>' + '</div>' + '</div>';
 
         $("#content").append(eventCard);
     });
@@ -135,6 +152,9 @@ $("li.tab a").click(function () {
 });
 
 $(".add-event-trigger").click(function () {
+    if (user === "") {
+        window.location.replace("/login");
+    }
     setTimeout(function () {
         $("#basicInfoTab").trigger("click");
     }, 200);

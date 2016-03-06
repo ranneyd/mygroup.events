@@ -11,7 +11,7 @@ var timePickerValidator = () => {
         }
         let dateRegex = /(1[012]|[1-9]):([0-5][0-9]) ([ap]m)/;
         let [sGarbage, sHours, sMinutes, sAMPM, ...sRest] = dateRegex.exec(start) || [];
-        let [eGarbage, eHours, eMinutes, eAMPM, ...eRest] = dateRegex.exec(end);
+        let [eGarbage, eHours, eMinutes, eAMPM, ...eRest] = dateRegex.exec(end) || [];
 
         // Simplify this with boolean logic? Meh, not worth it
         if(eAMPM === "am" && sAMPM === "pm"){
@@ -59,11 +59,28 @@ var getGoogleMapsURL = location => {
     return `https://www.google.com/maps/embed/v1/place?q=${newLocation}&key=${API_KEY}`;
 };
 $.get(`/${currentUrl}/getEvents`, data => {
-    if( !data ){
+    if( data.length === 0 ){
         $("#no-events").show();
     }
     // I could put in an else, but then I'd have to indent.
     data.forEach(elem => {
+        let dateOptions = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
+        let timeFormatter = (dateStr) => {
+            let date = new Date(dateStr);
+            let hours = date.getHours();
+            let ampm = "am";
+            if(hours / 12 >= 1){
+                hours -= 12;
+                ampm = 'pm';
+            }
+            hours += 1; // hours is 0-23, we want 1-12
+
+            let minutes = date.getMinutes();
+            if (minutes < 10){
+                minutes = "0" + minutes;
+            };
+            return `${hours}:${minutes} ${ampm}`;
+        };
         let eventCard = 
         '<div class="row">' +
             '<div class="col s12 m10 offset-m1 l8 offset-l2">' +
@@ -75,8 +92,8 @@ $.get(`/${currentUrl}/getEvents`, data => {
                         `<span class="card-title activator">${elem.name}` + 
                             '<i class="material-icons right">more_vert</i>' +
                         '</span>' +
-                        `<p>${new Date(elem.date).toLocaleString('en-US', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' })}` + 
-                            `<span class="right">${elem.timeStart} - ${elem.timeEnd}</span>` +
+                        `<p>${new Date(elem.dateStart).toLocaleString('en-US', dateOptions)}` + 
+                            `<span class="right">${timeFormatter(elem.dateStart)} - ${timeFormatter(elem.dateEnd)}</span>` +
                         '</p>'+
                     '</div>' +
                     '<div class="card-reveal">' +
@@ -165,14 +182,17 @@ $("li.tab a").click(function(){
     }
 });
 
-// The tab indicator isn't on when the modal opens, so we need to hack it a bit
-// When we click on the modal launcher, "click" on the first tab to put the indicator
-// under it. However, the modal animates in, and if it hasn't animated in, the
-// click will register a weird size, so wait a few millis after it's been clicked
-// to do it.
+// The tab indicator isn't on when the modal opens, so we need to hack it a
+// bit When we click on the modal launcher, "click" on the first tab to put
+// the "current tab" indicator under it. However, the modal animates in, and
+// if it hasn't animated in, the click will register a weird size, so wait a
+// few millis after it's been clicked to do it.
 //
 // Also, we have to AJAX the list of banners. 
 $(".add-event-trigger").click(function(){
+    if(user === "") {
+        window.location.replace("/login");
+    }
     setTimeout(function(){
         $("#basicInfoTab").trigger("click");
     },200);
