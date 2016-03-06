@@ -4,17 +4,20 @@ block navbar
     include navbar
 block content
     div.row
-        h1.header Login
-    div.row
-        form.col.s10.offset-s1(role="form" action="/login" method="post")
+        div.col.l8.offset-l2.m10.offset-m1.s12
             div.row
-                div.input-field.col.s12
-                    input#username(type="text" name="username")
-                    label(for="username") Username
-                div.input-field.col.s12
-                    input#password(type="password" name="password")
-                    label(for="password") Password
-                p.red-text.text-accent-4#error=error
-            div.row
-                button.btn.waves-effect.waves-light(type="submit" name="action") Login
+                h1.header Login
+                form.col.s12(role="form" action="/login" method="post")
+                    div.row
+                        div.input-field.col.s12
+                            input#username(type="text" name="username")
+                            label(for="username") Username
+                        div.input-field.col.s12
+                            input#password(type="password" name="password")
+                            label(for="password") Password
+                        p.red-text.text-accent-4#error=error
+                    div.row
+                        button.btn.waves-effect.waves-light(type="submit" name="action") Login
+                div.col.s12
+                    p: a(href="/register") Or make an account!
 

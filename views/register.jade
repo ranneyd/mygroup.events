@@ -4,46 +4,46 @@ block navbar
     include navbar
 block content
     div.row
-        h1.header Register
-    div.row
-        form.col.s10.offset-s1(role="form" action="/register" method="post")
-            div.row
-                div.input-field.col.s12
-                    i.material-icons.prefix#username-icon account_box
-                    div.preloader-wrapper.small.active.prefix#username-loading(style="display:none")
-                        div.spinner-layer
-                            div.circle-clipper.left
-                                div.circle
-                            div.gap-patch
-                                div.circle
-                            div.circle-clipper.right
-                                div.circle
-                    input#username(type="text" name="username" required)
-                    label(for="username") Username
-                    div.progress.hide
-                        div.indeterminate
-                div.input-field.col.s12
-                    i.material-icons.prefix email
-                    input.validate#email(type="email" name="email")
-                    label(for="email") Email Address
-                div.col.s12
-                    small: a.modal-trigger(href="#email-info") Why do you want my email address?
-                div.input-field.col.s12
-                    i.material-icons.prefix lock
-                    input.validate#password(type="password" name="password" required)
-                    label(for="password") Password
-                div.input-field.col.s12
-                    i.material-icons.prefix lock_outline
-                    input.validate#password2(type="password" name="password2" required)
-                    label(for="password2") Confirm Password
-                p.red-text.text-accent-4#error=error
-            div.row
-                button.btn.waves-effect.waves-light(type="submit" name="action") Signup
+        div.col.l8.offset-l2.m10.offset-m1.s12
+            h1.header Make an Account
+            form.col.s12(role="form" action="/register" method="post")
+                div.row
+                    div.input-field.col.s12
+                        i.material-icons.prefix#username-icon account_box
+                        div.preloader-wrapper.small.active.prefix#username-loading(style="display:none")
+                            div.spinner-layer
+                                div.circle-clipper.left
+                                    div.circle
+                                div.gap-patch
+                                    div.circle
+                                div.circle-clipper.right
+                                    div.circle
+                        input#username(type="text" name="username" required)
+                        label(for="username") Username
+                        div.progress.hide
+                            div.indeterminate
+                    div.input-field.col.s12
+                        i.material-icons.prefix email
+                        input.validate#email(type="email" name="email")
+                        label(for="email") Email Address
+                    div.col.s12
+                        small: a.modal-trigger(href="#email-info") Why do you want my email address?
+                    div.input-field.col.s12
+                        i.material-icons.prefix lock
+                        input.validate#password(type="password" name="password" required)
+                        label(for="password") Password
+                    div.input-field.col.s12
+                        i.material-icons.prefix lock_outline
+                        input.validate#password2(type="password" name="password2" required)
+                        label(for="password2") Confirm Password
+                    p.red-text.text-accent-4#error=error
+                div.row
+                    button.btn.waves-effect.waves-light(type="submit" name="action") Signup
 
 
     div.modal.bottom-sheet#email-info
         div.modal-content
-            p.flow-text Providing your email address is optional. If you provide it, we can use it later to send you password reset links (if you hit "forgot my password") or to send you updates about events you've posted (RSVPs etc, but only if you opt-in). We will NEVER, EVER give you email address to anyone and we will NEVER, EVER send you spam. I promise; I <strong>hate</strong> spam.
+            p.flow-text Providing your email address is optional. If you provide it, we can use it later to send you password reset links (if you hit "forgot my password") or to send you updates about events you've posted (RSVPs etc, but only if you opt-in). We will NEVER, EVER give your email address to anyone and we will NEVER, EVER send you spam. I promise; I <strong>hate</strong> spam.
         div.modal-footer
             button.modal-action.modal-close.waves-effect.waves-light.btn-flat(href="#!") Got it
 
