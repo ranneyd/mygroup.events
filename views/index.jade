@@ -3,5 +3,38 @@ extends layout
 block navbar
     include navbar
 block content
-    h1.header= title
-    p Welcome to #{title}
+    h1.header Ravie
+    p.flow-text Ravie allows you to plan events within your community. Make a group for anything from your close friend group to the incoming freshman class of your college. Whether you're hosting a giant barbecue/luau for your whole organization or you and and two friends are going out to dinner and you wouldn't mind a third person meeting you there, throw it up on Ravie for your people to see. On the other side, if it's a random Thursday night and your plans just fell through, check your Ravie group to see when and where the next event is to see if you want to join in.
+
+    a.waves-effect.waves-light.btn-large.modal-trigger(href="#add-group")
+        i.material-icons.left add
+        | Make a group
+
+    div.modal.modal-fixed-footer#add-group
+        div.modal-content
+            h4
+                | Make a group 
+                i.material-icons.right.modal-close close
+            form.col.s12#newGroup(method="post" action="/newGroup")
+                div.row
+                    div.input-field.col.s12
+                        i.material-icons.prefix#name-icon mode_edit
+                        div.preloader-wrapper.small.active.prefix#name-loading(style="display:none")
+                            div.spinner-layer
+                                div.circle-clipper.left
+                                    div.circle
+                                div.gap-patch
+                                    div.circle
+                                div.circle-clipper.right
+                                    div.circle
+                        input.validate#name(type="text" name="name" required)
+                        label(for="name") Name your group
+                    p.red-text.text-accent-4#error=error
+        div.modal-footer
+            - var modalButtonClasses = "modal-action btn-flat waves-effect waves-dark"
+            a#newGroupButton(class=modalButtonClasses) Submit
+            a.left#newGroupClose(class=modalButtonClasses) Close
+block scripts
+    script(type='text/javascript').
+        var user = "#{user.username}";
+    script(type='text/javascript' src='/js/homepage.js')

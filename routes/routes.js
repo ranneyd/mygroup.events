@@ -9,9 +9,16 @@ var Event = require('../models/event.js');
 var User = require('../models/user.js');
 
 
+var convertGroupName = ( name ) => {
+    return name.toLowerCase().replace(/ /g, "_").replace(/[^a-z0-9_]/g,"");
+}
+
 /* GET home page. */
 router.get('/', function(req, res, next) {
-    res.render('index', { title: 'Ravie', user : req.user });
+    req.session.returnTo = req.path;
+    let user = (req.user ? req.user : { username: "", email: ""}) 
+
+    res.render('index', { title: 'Ravie', user : user });
 });
 
 router.get('/register', function(req, res) {
@@ -67,6 +74,16 @@ router.get(/\/ajax\/userExists\/(.+)\/?/, function(req, res) {
     User.findOne(
         {
             "username" : req.params[0]
+        },
+        function(err, results){
+            res.send(!!results);
+    });
+});
+
+router.post(/\/ajax\/groupExists/, function(req, res) {
+    Group.findOne(
+        {
+            "url" : convertGroupName(req.body.name)
         },
         function(err, results){
             res.send(!!results);
