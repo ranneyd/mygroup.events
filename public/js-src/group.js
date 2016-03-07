@@ -76,11 +76,13 @@ $.get(`/${currentUrl}/getEvents`, data => {
             let date = new Date(dateStr);
             let hours = date.getHours();
             let ampm = "am";
-            if(hours / 12 >= 1){
+            if(hours === 0) {
+                hours = 12;
+            }
+            if(hours / 12 > 1){
                 hours -= 12;
                 ampm = 'pm';
             }
-            
 
             let minutes = date.getMinutes();
             if (minutes < 10){
@@ -88,6 +90,32 @@ $.get(`/${currentUrl}/getEvents`, data => {
             };
             return `${hours}:${minutes} ${ampm}`;
         };
+
+        let now = new Date();
+        let startTime = new Date(elem.dateStart);
+        let endTime = new Date(elem.dateEnd);
+
+
+        let minutesSinceStart = -(startTime - now)/60000 | 0;
+        let minutesUntilEnd = (endTime - now)/60000 | 0;
+        let timeMessage = "";
+
+        if(minutesSinceStart > -60){
+            if (minutesUntilEnd < 30) {
+                timeMessage = `<span class="red-text">(ends in ${minutesUntilEnd} minutes)</span>`;
+            }
+            else if(minutesSinceStart >= 60) {
+                timeMessage = `<span class="red-text text-accent-4">(started over an hour ago)</span>`;
+            }
+            else if (minutesSinceStart > 0) {
+                timeMessage = `<span class="red-text text-accent-4">(started ${minutesSinceStart} minutes ago)</span>`;
+            }
+            else if (minutesSinceStart > -30){
+                timeMessage = `<span class="green-text">(starts in ${-minutesSinceStart} minutes)</span>`;
+            }
+        }
+        
+
         let eventCard = 
         '<div class="row">' +
             '<div class="col s12 m10 offset-m1 l8 offset-l2">' +
@@ -96,18 +124,26 @@ $.get(`/${currentUrl}/getEvents`, data => {
                         `<img class="activator" src="/images/banners/${elem.banner}">` +
                     '</div>' +
                     '<div class="card-content">'+
-                        `<span class="card-title activator">${elem.name}` + 
-                            '<i class="material-icons right">more_vert</i>' +
-                        '</span>' +
-                        `<p>${new Date(elem.dateStart).toLocaleString('en-US', dateOptions)}` + 
-                            `<span class="right">${timeFormatter(elem.dateStart)} - ${timeFormatter(elem.dateEnd)}</span>` +
-                        '</p>'+
+                        '<div class="activator">' +
+                            `<span class="card-title activator">${elem.name}` + 
+                                '<i class="material-icons right">more_vert</i>' +
+                            '</span>' +
+                        '</div>' +
+                        '<div class="row no-margin-bottom">' + 
+                            '<div class="col s8">' +
+                                `<p>${new Date(elem.dateStart).toLocaleString('en-US', dateOptions)}</p>` + 
+                                `<p>${timeFormatter(elem.dateStart)} - ${timeFormatter(elem.dateEnd)} ${timeMessage}</p>` +
+                            '</div>' +
+                            '<div class="col s4">' +
+                                `  <a class="right waves-effect waves-orange btn-flat">RSVP</a>` +
+                            '</div>' +
+                        '</div>' +
                     '</div>' +
                     '<div class="card-reveal">' +
                         `<span class="card-title">${elem.name}` + 
                             '<i class="material-icons right">close</i>' +
                         '</span>' + 
-                        '<div class="row">' +
+                        '<div class="row no-margin-bottom" style="padding-bottom:0px">' +
                             '<div class="col s12 l5">' +
                                 '<h5>Details</h5>' + 
                                 `<p>${elem.description}</p>` +
@@ -121,9 +157,6 @@ $.get(`/${currentUrl}/getEvents`, data => {
                             '</div>' +
                         '</div>' + 
                     '</div>' +
-                    '<div class="card-action">'+
-                        '<a>RSVP</a>'+ 
-                    '</div>' + 
                 '</div>' + 
             '</div>' +
         '</div>';
