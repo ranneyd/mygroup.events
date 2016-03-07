@@ -164,22 +164,14 @@ router.post(/^\/(.*)\/new/, function(req, res, next) {
 });
 
 router.get(/^\/(.*)\/getEvents/, function(req, res, next) {
+    var after = new Date();
     if(req.query.after){
         var after = new Date(req.query.after);
     }
-    var today = new Date();
     Event.find({
             group: req.params[0],
-            // $and: [
-            //     {$or: [
-            //         {date: {$gt: after || new Date()}},
-            //         {$and: [
-            //             {date: {$gte: after || new Date()}},
-            //             {timeEnd: {$gte: "11:00 PM"}}
-            //         ]}
-            //     ]}
-            // ]
-        }).exec(function(err, events){
+            dateEnd: {$gt: after },
+        }).sort("dateEnd").exec(function(err, events){
             if (err) {
                 console.log("Error");
                 console.log(err);
