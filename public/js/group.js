@@ -91,7 +91,10 @@ $.get("/" + currentUrl + "/getEvents", function (data) {
             var date = new Date(dateStr);
             var hours = date.getHours();
             var ampm = "am";
-            if (hours / 12 >= 1) {
+            if (hours === 0) {
+                hours = 12;
+            }
+            if (hours / 12 > 1) {
                 hours -= 12;
                 ampm = 'pm';
             }
@@ -102,7 +105,28 @@ $.get("/" + currentUrl + "/getEvents", function (data) {
             };
             return hours + ":" + minutes + " " + ampm;
         };
-        var eventCard = '<div class="row">' + '<div class="col s12 m10 offset-m1 l8 offset-l2">' + '<div class="card hoverable">' + '<div class="card-image waves-effect waves-block waves-light">' + ("<img class=\"activator\" src=\"/images/banners/" + elem.banner + "\">") + '</div>' + '<div class="card-content">' + ("<span class=\"card-title activator\">" + elem.name) + '<i class="material-icons right">more_vert</i>' + '</span>' + ("<p>" + new Date(elem.dateStart).toLocaleString('en-US', dateOptions)) + ("<span class=\"right\">" + timeFormatter(elem.dateStart) + " - " + timeFormatter(elem.dateEnd) + "</span>") + '</p>' + '</div>' + '<div class="card-reveal">' + ("<span class=\"card-title\">" + elem.name) + '<i class="material-icons right">close</i>' + '</span>' + '<div class="row">' + '<div class="col s12 l5">' + '<h5>Details</h5>' + ("<p>" + elem.description + "</p>") + '<h5>Location</h5>' + ("<p>" + elem.location + "</p>") + '</div>' + '<div class="col s10 l7">' + '<div class="video-container">' + ("<iframe class=\"card-map\" allowfullscreen frameborder=\"0\" src=\"" + getGoogleMapsURL(elem.location) + "\"></iframe>") + '</div>' + '</div>' + '</div>' + '</div>' + '<div class="card-action">' + '<a>RSVP</a>' + '</div>' + '</div>' + '</div>' + '</div>';
+
+        var now = new Date();
+        var startTime = new Date(elem.dateStart);
+        var endTime = new Date(elem.dateEnd);
+
+        var minutesSinceStart = -(startTime - now) / 60000 | 0;
+        var minutesUntilEnd = (endTime - now) / 60000 | 0;
+        var timeMessage = "";
+
+        if (minutesSinceStart > -60) {
+            if (minutesUntilEnd < 30) {
+                timeMessage = "<span class=\"red-text\">(ends in " + minutesUntilEnd + " minutes)</span>";
+            } else if (minutesSinceStart >= 60) {
+                timeMessage = "<span class=\"red-text text-accent-4\">(started over an hour ago)</span>";
+            } else if (minutesSinceStart > 0) {
+                timeMessage = "<span class=\"red-text text-accent-4\">(started " + minutesSinceStart + " minutes ago)</span>";
+            } else if (minutesSinceStart > -30) {
+                timeMessage = "<span class=\"green-text\">(starts in " + -minutesSinceStart + " minutes)</span>";
+            }
+        }
+
+        var eventCard = '<div class="row">' + '<div class="col s12 m10 offset-m1 l8 offset-l2">' + '<div class="card hoverable">' + '<div class="card-image waves-effect waves-block waves-light">' + ("<img class=\"activator\" src=\"/images/banners/" + elem.banner + "\">") + '</div>' + '<div class="card-content">' + '<div class="activator">' + ("<span class=\"card-title activator\">" + elem.name) + '<i class="material-icons right">more_vert</i>' + '</span>' + '</div>' + '<div class="row no-margin-bottom">' + '<div class="col s8">' + ("<p>" + new Date(elem.dateStart).toLocaleString('en-US', dateOptions) + "</p>") + ("<p>" + timeFormatter(elem.dateStart) + " - " + timeFormatter(elem.dateEnd) + " " + timeMessage + "</p>") + '</div>' + '<div class="col s4">' + "  <a class=\"right waves-effect waves-orange btn-flat\">RSVP</a>" + '</div>' + '</div>' + '</div>' + '<div class="card-reveal">' + ("<span class=\"card-title\">" + elem.name) + '<i class="material-icons right">close</i>' + '</span>' + '<div class="row no-margin-bottom" style="padding-bottom:0px">' + '<div class="col s12 l5">' + '<h5>Details</h5>' + ("<p>" + elem.description + "</p>") + '<h5>Location</h5>' + ("<p>" + elem.location + "</p>") + '</div>' + '<div class="col s10 l7">' + '<div class="video-container">' + ("<iframe class=\"card-map\" allowfullscreen frameborder=\"0\" src=\"" + getGoogleMapsURL(elem.location) + "\"></iframe>") + '</div>' + '</div>' + '</div>' + '</div>' + '</div>' + '</div>' + '</div>';
 
         $("#content").append(eventCard);
     });
