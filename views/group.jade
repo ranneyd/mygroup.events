@@ -7,11 +7,11 @@ block content
         div.col.s8.offset-s2
             p.flow-text No events coming up. <a href="#add-event" class="modal-trigger add-event-trigger">Add some!</a>
     div.modal.modal-fixed-footer#add-event
-        div.modal-content.flex-box-fill
+        div.modal-content.flex-box-fill(style="padding-bottom:0px")
             h4
                 | Add a new event 
                 i.material-icons.right.modal-close close
-            form.flex-box-fill.col.s12#newEvent(method="post" action="/" + currentUrl + "/new")
+            form.col.s12#newEvent(method="post" action="/" + currentUrl + "/new")
                 input(type="hidden" value=currentUrl name="group")
                 ul.tabs
                     li.tab.col.s4
@@ -80,10 +80,10 @@ block content
                                     a.waves-effect.waves-light.btn#enter-location Show me on the map
                             div.flex-box-fill.video-container
                                 iframe.flex1.map(allowfullscreen frameborder="0" src="https://www.google.com/maps/embed/v1/view?zoom=3&center=37.0902,-95.7129&key=AIzaSyA_pbDU2WPMoChRE2oFhjJVNJHPI5-1Ewg" )
-                        div.input-field.col.s6
+                        div.col.s6
+                            h5 How to Display RSVPs
                             div.row
                                 div.col.s12
-                                    h5 How to Display RSVPs
                                     p
                                         input#anonymous(name="rsvp" type="radio" value="anonymous" checked)
                                         label(for="anonymous") No one can see who has RSVP'd
