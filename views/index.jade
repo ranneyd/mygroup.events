@@ -6,7 +6,7 @@ block content
     h1.header Ravie
     p.flow-text Ravie allows you to plan events within your community. Make a group for anything from your close friend group to the incoming freshman class of your college. Whether you're hosting a giant barbecue/luau for your whole organization or you and and two friends are going out to dinner and you wouldn't mind a third person meeting you there, throw it up on Ravie for your people to see. On the other side, if it's a random Thursday night and your plans just fell through, check your Ravie group to see when and where the next event is to see if you want to join in.
 
-    a.waves-effect.waves-light.btn-large.modal-trigger(href="#add-group")
+    a.waves-effect.waves-light.btn-large.modal-trigger#add-group-trigger(href="#add-group")
         i.material-icons.left add
         | Make a group
 
@@ -16,19 +16,45 @@ block content
                 | Make a group 
                 i.material-icons.right.modal-close close
             form.col.s12#newGroup(method="post" action="/newGroup")
-                div.row
-                    div.input-field.col.s12
-                        i.material-icons.prefix#name-icon mode_edit
-                        div.preloader-wrapper.small.active.prefix#name-loading(style="display:none")
-                            div.spinner-layer
-                                div.circle-clipper.left
-                                    div.circle
-                                div.gap-patch
-                                    div.circle
-                                div.circle-clipper.right
-                                    div.circle
-                        input.validate#name(type="text" name="name" required)
-                        label(for="name") Name your group
+                    div.input-field.row
+                        div.col.s12
+                            i.material-icons.prefix#name-icon mode_edit
+                            div.preloader-wrapper.small.active.prefix#name-loading(style="display:none")
+                                div.spinner-layer
+                                    div.circle-clipper.left
+                                        div.circle
+                                    div.gap-patch
+                                        div.circle
+                                    div.circle-clipper.right
+                                        div.circle
+                            input.validate#name(name="name" type="text"  required)
+                            label(for="name") Name your group
+                            p.urlHolder(style="display:none")
+                                small Your group's url will be <em>http://ravie.events/<span class="url"></span></em>
+                    div.input-field.row
+                        div.col.s12
+                            h5 Who can see your group?
+                            p
+                                input#visibility-public(name="visibility" type="radio" value="public" checked)
+                                label(for="visibility-public") My group is completely public.
+                            p
+                                input#visibility-private(name="visibility" type="radio" value="private")
+                                label(for="visibility-private") Anyone can see that my group exists and ask to join, but only members can see the events.
+                            p
+                                input#visibility-hidden(name="visibility" type="radio" value="hidden")
+                                label(for="visibility-hidden") No one can even see that my group exists unless they are a member.
+                    div.input-field.row
+                        div.col.s12
+                            h5 Who can post an event in your group?
+                            p
+                                input#post-public(name="post" type="radio" value="public" checked)
+                                label(for="post-public") Anyone can post an event in my group
+                            p
+                                input#post-approval(name="post" type="radio" value="approval")
+                                label(for="post-approval") Anyone can post an event in my group, but all events must be approved by an administrator of the group.
+                            p
+                                input#post-admin(name="post" type="radio" value="admin")
+                                label(for="post-admin") Only administrators can post an event to my group.
                     p.red-text.text-accent-4#error=error
         div.modal-footer
             - var modalButtonClasses = "modal-action btn-flat waves-effect waves-dark"

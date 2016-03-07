@@ -9,9 +9,6 @@ var Event = require('../models/event.js');
 var User = require('../models/user.js');
 
 
-var convertGroupName = ( name ) => {
-    return name.toLowerCase().replace(/ /g, "_").replace(/[^a-z0-9_]/g,"");
-}
 
 /* GET home page. */
 router.get('/', function(req, res, next) {
@@ -83,7 +80,7 @@ router.get(/\/ajax\/userExists\/(.+)\/?/, function(req, res) {
 router.post(/\/ajax\/groupExists/, function(req, res) {
     Group.findOne(
         {
-            "url" : convertGroupName(req.body.name)
+            "url" : req.body.name
         },
         function(err, results){
             res.send(!!results);
@@ -111,7 +108,7 @@ router.get('/uh-oh', function(req, res, next) {
 router.get(/^\/([^\/]+)\/?$/, function(req, res, next) {
     req.session.returnTo = req.path;
     let user = (req.user ? req.user : { username: "", email: ""}) 
-    Group.find({
+    Group.findOne({
             "url": req.params[0]
         },
         function (err, results){
@@ -120,11 +117,58 @@ router.get(/^\/([^\/]+)\/?$/, function(req, res, next) {
                 console.log(err);
                 res.redirect("/uh-oh");
             }
-            if ( results.length ){
-                res.render('group', { title: results[0].name, group: true, currentUrl: req.params[0], user: user});
+            if ( results !== null){
+
+                if ( results.visibility !== "hidden" || results.members.indexOf(user.username) !== -1){
+                    res.render('group', { title: results.name, group: true, currentUrl: req.params[0], user: user});
+                }
+                else{
+                    res.render('404', { title: "Ravie", user: user });
+                }
             }
             else {
                 res.render('404', { title: "Ravie", user: user });
+            }
+    });
+});
+router.post(/newGroup/, function(req, res, next) {
+    Group.findOne(
+        {
+            $or: [
+                {"url" : req.body.url},
+                {"name": req.body.name} 
+            ]
+        },
+        function(err, results){
+            if(!!results) {
+                console.log("Error");
+                console.log("Group already exists");
+                res.redirect("/uh-oh");
+            }
+            else {
+                if(!req.user){
+                    console.log("Error");
+                    console.log("Someone tried to make a group without logging in.");
+                    res.redirect("/uh-oh");
+                }
+                let newUrl = req.body.name.toLowerCase().replace(/ /g, "_").replace(/[^a-z0-9_]/g,"");
+                var newGroup = new Group({
+                    name: req.body.name,
+                    url: newUrl,
+                    visibility: req.body.visibility,
+                    post: req.body.post,
+                    owner: req.user.username,
+                    admins: [req.user.username],
+                    members: [req.user.username]
+                });
+                newGroup.save(function(err) {
+                    if (err) {
+                        console.log("Error");
+                        console.log(err);
+                        res.redirect("/uh-oh");
+                    }
+                });
+                res.redirect(`/${newUrl}`);
             }
     });
 });

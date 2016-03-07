@@ -3,12 +3,12 @@ var mongoose = require('mongoose'),
 
 var GroupSchema = new Schema({
     name: { type: String, required: true, index: { unique: true } },
+    url: { type: String, required: true, index: { unique: true } },
+    visibility: { type: String},
+    url: { type: String},
+    owner: { type: String},
+    admins: { type: Array},
+    members: { type: Array},
 });
-
-GroupSchema.pre('save', function(next) {
-    var group = this;
-
-    group.name = group.name.toLowerCase();
-});
-
+ 
 module.exports = mongoose.model('Group', GroupSchema);

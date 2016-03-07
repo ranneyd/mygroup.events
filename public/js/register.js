@@ -26,6 +26,7 @@ $("#username").keyup(function () {
         if (data) {
             $(_this).addClass("invalid").removeClass("valid")[0].setCustomValidity("The username must be unique");
             $("#error").html("Username is taken. Pick another");
+            $(".urlHolder").hide();
         } else {
             $(_this).addClass("valid").removeClass("invalid")[0].setCustomValidity("");
             $("#error").html("");
