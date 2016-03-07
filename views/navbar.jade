@@ -24,9 +24,9 @@ mixin nav-list(dropdownID, mobile)
         a.dropdown-button(class=aClasses data-activates=dropdownID data-tooltip=(mobile ? false : "My Account"))&attributes(mobile ? false : hoverAttributes)
             i.material-icons(class=(mobile ? 'left' : false)) account_circle
             if mobile
-                    | My Account
+                | My Account
         ul.dropdown-content(id=dropdownID)
-            if(user)
+            if(user && user.username)
                 li: a=user.username
                 li.divider
                 li: a My Groups
@@ -35,6 +35,11 @@ mixin nav-list(dropdownID, mobile)
             else
                 li: a(href="/login") Login
                 li: a(href="/register") Register
+    li
+        a(href="/" class=aClasses data-tooltip=(mobile ? false : "Ravie"))&attributes(mobile ? false : hoverAttributes)
+            i.material-icons(class=(mobile ? 'left' : false)) home
+            if mobile
+                | Ravie
 
 div.navbar-fixed
     nav.orange.lighten-1(role='navigation')

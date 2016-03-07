@@ -27,7 +27,7 @@ $("#username").keyup(function () {
             $(_this).addClass("invalid").removeClass("valid")[0].setCustomValidity("The username must be unique");
             $("#error").html("Username is taken. Pick another");
         } else {
-            $("#username").addClass("valid").removeClass("invalid")[0].setCustomValidity("");
+            $(_this).addClass("valid").removeClass("invalid")[0].setCustomValidity("");
             $("#error").html("");
         }
     });

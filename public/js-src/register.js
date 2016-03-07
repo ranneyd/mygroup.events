@@ -25,7 +25,7 @@ $("#username").keyup(function(){
             $("#error").html("Username is taken. Pick another");
         }
         else{
-            $("#username").addClass("valid").removeClass("invalid")[0].setCustomValidity("");
+            $(this).addClass("valid").removeClass("invalid")[0].setCustomValidity("");
             $("#error").html("");
         } 
     });
