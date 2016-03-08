@@ -54,8 +54,7 @@ $("#timeStart").on("input", timePickerValidator);
 $("#timeEnd").on("input", timePickerValidator);
 
 $("#date").on("change", function(){
-    console.log("lmao");
-    if($(this).val() !== "" && $(this).hasClass("invalid")){
+    if($(this).val() !== ""){
         $(this).removeClass("invalid").addClass("valid");
     }
 });
