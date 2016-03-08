@@ -101,7 +101,9 @@ router.get('/ajax/getBannerImages', function(req, res, next) {
 });
 
 router.get('/uh-oh', function(req, res, next) {
-    res.render('uh-oh', { title: "Ravie" });
+    let user = (req.user ? req.user : { username: "", email: ""}) 
+
+    res.render('uh-oh', { title: "Ravie", user: user });
 });
 
 // Group page 
@@ -246,7 +248,8 @@ router.get(/^\/(.*)\/getEvents/, function(req, res, next) {
 
 // 404
 router.get(/.+/, function(req, res, next) {
-    res.render('404', { title: "Ravie" });
+    let user = (req.user ? req.user : { username: "", email: ""}) 
+    res.render('404', { title: "Ravie", user: user });
 });
 
 module.exports = router;
