@@ -116,8 +116,7 @@ router.post('/suggestion', function(req, res, next) {
 });
 
 
-router.get('/mygroups', function(req, res, next) {
-    req.session.returnTo = req.path;
+router.post('/mygroups', function(req, res, next) {
     if(req.user){
         Group.find(
             {
@@ -128,13 +127,13 @@ router.get('/mygroups', function(req, res, next) {
                 if (err) {
                     console.log("Error");
                     console.log(err);
-                    res.redirect("/uh-oh");
+                    res.send("/uh-oh");
                 }
-                res.render('mygroups', { title: "My Groups", user: req.user, groups: results });
+                res.send(results);
         });
     }
     else {
-        return res.redirect('login');
+        return res.send('You need to be logged in.');
     }
 });
 
@@ -168,6 +167,33 @@ router.get(/^\/([^\/]+)\/?$/, function(req, res, next) {
             }
             else {
                 res.render('404', { title: "Ravie", user: user });
+            }
+    });
+});
+// Member list 
+router.post(/^\/([^\/]+)\/members\/?$/, function(req, res, next) {
+    let user = (req.user ? req.user : { username: "", email: ""}) 
+    Group.findOne({
+            "url": req.params[0]
+        },
+        "members visibility",
+        function (err, results){
+            if (err) {
+                console.log("Error");
+                console.log(err);
+                res.send("uh-oh");
+            }
+            if ( results !== null){
+
+                if ( results.visibility === "public" || results.members.indexOf(user.username) !== -1){
+                    res.send(results);
+                }
+                else{
+                    res.send("404. Sorry bro.");
+                }
+            }
+            else {
+                res.send("404. Sorry bro.");
             }
     });
 });

@@ -117,7 +117,7 @@ $.get(`/${currentUrl}/getEvents`, data => {
 
         let eventCard = 
         '<div class="row">' +
-            '<div class="col s12 m10 offset-m1 l8 offset-l2">' +
+            '<div class="col s12 l8 offset-l2">' +
                 '<div class="card hoverable">' +
                     '<div class="card-image waves-effect waves-block waves-light">' +
                         `<img class="activator" src="/images/banners/${elem.banner}">` +

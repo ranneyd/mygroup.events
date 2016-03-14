@@ -1,25 +1,7 @@
-mixin nav-list(dropdownID, mobile)
-    - var hoverAttributes = {"class":"tooltipped","data-position":"bottom", "data-delay":"50"};
-    - var aClasses = "waves-effect waves-light";
-    if group
-        if calendar
-            li
-                a(class=aClasses data-tooltip=(mobile ? false : "List view"))&attributes(mobile ? false : hoverAttributes)
-                    i.material-icons(class=(mobile ? 'left' : false)) view_agenda
-                    if mobile
-                        | List view
-        else
-            li
-                a(class=aClasses data-tooltip=(mobile ? false : "Calendar view"))&attributes(mobile ? false : hoverAttributes)
-                    i.material-icons(class=(mobile ? 'left' : false)) event
-                    if mobile
-                        | Calendar view
-        li
-            a.modal-trigger.add-event-trigger(class=aClasses href="#add-event" data-tooltip=(mobile ? false : "Add a new event"))&attributes(mobile ? false : hoverAttributes)
-                i.material-icons(class=(mobile ? 'left' : false)) add
-                if mobile
-                    | Add a new event
+- var hoverAttributes = {"class":"tooltipped","data-position":"bottom", "data-delay":"50"};
+- var aClasses = "waves-effect waves-light";
 
+mixin user-nav(dropdownID, mobile)
     li
         a.dropdown-button(class=aClasses data-activates=dropdownID data-tooltip=(mobile ? false : "My Account"))&attributes(mobile ? false : hoverAttributes)
             i.material-icons(class=(mobile ? 'left' : false)) account_circle
@@ -29,35 +11,67 @@ mixin nav-list(dropdownID, mobile)
             if(user && user.username)
                 li: a=user.username
                 li.divider
-                li: a(href="/mygroups") My Groups
+                li: a.modal-trigger#mygroups(href="#list-modal") My Groups
                 li: a Settings
                 li: a(href="/logout") Logout
             else
                 li: a(href="/login") Login
                 li: a(href="/register") Register
+mixin nav-list(mobile)
     li
         a(href="/" class=aClasses data-tooltip=(mobile ? false : "Ravie"))&attributes(mobile ? false : hoverAttributes)
             i.material-icons(class=(mobile ? 'left' : false)) home
             if mobile
                 | Ravie
     li
-        a.modal-trigger#suggestions-trigger(href="#suggestions" class=aClasses data-tooltip=(mobile ? false : "Suggestions"))&attributes(mobile ? false : hoverAttributes)
+        a.modal-trigger#suggestions-trigger(href="#suggestions" class=aClasses data-tooltip=(mobile ? false : "Leave a suggestion"))&attributes(mobile ? false : hoverAttributes)
             i.material-icons(class=(mobile ? 'left' : false)) comment
             if mobile
-                | Suggestions
-
+                | Leave a suggestion
+mixin group-nav(mobile)
+    if calendar
+        li
+            a(class=aClasses data-tooltip=(mobile ? false : "List view"))&attributes(mobile ? false : hoverAttributes)
+                i.material-icons(class=(mobile ? 'left' : false)) view_agenda
+                if mobile
+                    | List view
+    else
+        li
+            a(class=aClasses data-tooltip=(mobile ? false : "Calendar view"))&attributes(mobile ? false : hoverAttributes)
+                i.material-icons(class=(mobile ? 'left' : false)) event
+                if mobile
+                    | Calendar view
+    li
+        a(class=aClasses href="/#{currentUrl}/users" data-tooltip=(mobile ? false : "Members"))&attributes(mobile ? false : hoverAttributes)
+            i.material-icons(class=(mobile ? 'left' : false)) people
+            if mobile
+                | Members
+    li
+        a.modal-trigger.add-event-trigger(class=aClasses href="#add-event" data-tooltip=(mobile ? false : "Add a new event"))&attributes(mobile ? false : hoverAttributes)
+            i.material-icons(class=(mobile ? 'left' : false)) add
+            if mobile
+                | Add a new event
 div.navbar-fixed
     nav.orange.lighten-1(role='navigation')
         div.nav-wrapper.container
             -var href = "/";
             if group
                 -href += currentUrl;
-            a.brand-logo(href=href)=title
-            a.button-collapse#mobile-menu-button(href='#' data-activates='mobile-menu'): i.material-icons menu
+            a.brand-logo.center(href=href)=title
+
             ul.right.hide-on-med-and-down
-                +nav-list('user-menu')
+                if group
+                    +group-nav(false)
+                +user-nav('user-menu')
+            ul.left.hide-on-med-and-down
+                +nav-list(false)
+
+            a.button-collapse#mobile-menu-button(href='#' data-activates='mobile-menu')
+                i.material-icons menu
             ul.side-nav#mobile-menu
-                +nav-list('mobile-user-menu', true)
+                +nav-list(true)
+                +group-nav(true)
+                +user-nav('mobile-user-menu', true)
 
 div.modal.bottom-sheet#suggestions
         div.modal-content
@@ -80,3 +94,13 @@ div.modal.bottom-sheet#suggestions
                         textarea.materialize-textarea#suggestion(name="suggestion")
                         label(for="suggestion") What is your suggestion? Your account and current page are attached automatically.
                 button.btn-flat.waves-effect.waves-orange.modal-close(type="submit") Send
+div.modal.modal-fixed-footer#list-modal
+    div.modal-content
+        h4
+            span#list-title
+            i.material-icons.right.modal-close close
+        div.progress#list-progress
+            div.indeterminate
+        div#list-body
+    div.modal-footer
+        a.modal-close.btn-flat.waves-effect.waves-dark(class=modalButtonClasses) Close

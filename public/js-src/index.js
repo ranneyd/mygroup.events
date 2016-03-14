@@ -1,7 +1,4 @@
 $(document).ready(function(){
-    $("#mobile-menu-button").sideNav({
-        edge: "left"
-    });
     $('.dropdown-button').dropdown({
         constrain_width: false, // Does not change width of dropdown to that of the activator
         belowOrigin: true,      // Displays dropdown below the button
@@ -24,22 +21,4 @@ $(document).ready(function(){
         closeOnClear: false,
     });
     $('.picker__footer button').addClass("btn-flat");
-
-    $(".emoji-toggle").click(function(){
-        $(".emoji-toggle").addClass("btn-flat");
-        $(this).removeClass("btn-flat");
-        $("#emoji-input").val($(this).attr("data-tooltip"));
-    });
-
-    $("#suggestion-form").submit(function(e){
-        e.preventDefault();
-        $.ajax({
-            type: "POST",
-            url: "/suggestion",
-            data: {
-                sentiment: $("#emoji-input").val(),
-                suggestion: $("#suggestion").val()
-            }
-        });
-    })
 });
