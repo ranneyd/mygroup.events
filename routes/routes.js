@@ -176,7 +176,7 @@ router.post(/^\/([^\/]+)\/members\/?$/, function(req, res, next) {
     Group.findOne({
             "url": req.params[0]
         },
-        "members visibility",
+        "members visibility admins",
         function (err, results){
             if (err) {
                 console.log("Error");
@@ -186,7 +186,13 @@ router.post(/^\/([^\/]+)\/members\/?$/, function(req, res, next) {
             if ( results !== null){
 
                 if ( results.visibility === "public" || results.members.indexOf(user.username) !== -1){
-                    res.send(results);
+                    res.send(results.members.map(elem => {
+                        let val = {name: elem};
+                        if(results.admins.indexOf(elem) !== -1) {
+                            val.admin = true;
+                        }
+                        return val;
+                    }));
                 }
                 else{
                     res.send("404. Sorry bro.");
@@ -197,6 +203,33 @@ router.post(/^\/([^\/]+)\/members\/?$/, function(req, res, next) {
             }
     });
 });
+// // promote to admin
+// router.post(/^\/([^\/]+)\/promote\/?$/, function(req, res, next) {
+//     let user = (req.user ? req.user : { username: "", email: ""}) 
+//     Group.findOne({
+//             "url": req.params[0]
+//         },
+//         "members admins",
+//         function (err, results){
+//             if (err) {
+//                 console.log("Error");
+//                 console.log(err);
+//                 res.send("uh-oh");
+//             }
+//             if ( results !== null){
+
+//                 if ( results.visibility === "public" || results.members.indexOf(user.username) !== -1){
+//                     res.send(results.members);
+//                 }
+//                 else{
+//                     res.send("404. Sorry bro.");
+//                 }
+//             }
+//             else {
+//                 res.send("404. Sorry bro.");
+//             }
+//     });
+// });
 router.post(/newGroup/, function(req, res, next) {
     Group.findOne(
         {

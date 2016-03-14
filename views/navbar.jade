@@ -42,7 +42,7 @@ mixin group-nav(mobile)
                 if mobile
                     | Calendar view
     li
-        a(class=aClasses href="/#{currentUrl}/users" data-tooltip=(mobile ? false : "Members"))&attributes(mobile ? false : hoverAttributes)
+        a.modal-trigger#members(class=aClasses href="#list-modal" data-tooltip=(mobile ? false : "Members"))&attributes(mobile ? false : hoverAttributes)
             i.material-icons(class=(mobile ? 'left' : false)) people
             if mobile
                 | Members
