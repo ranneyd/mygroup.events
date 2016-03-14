@@ -7,6 +7,7 @@ var Group = require('../models/group.js');
 var Banner = require('../models/banner.js');
 var Event = require('../models/event.js');
 var User = require('../models/user.js');
+var Suggestion = require('../models/suggestion.js');
 
 
 
@@ -99,6 +100,43 @@ router.get('/ajax/getBannerImages', function(req, res, next) {
             res.send(results);
     });
 });
+router.post('/suggestion', function(req, res, next) {
+    var newSuggestion = new Suggestion({
+        sentiment: req.body.sentiment,
+        suggestion: req.body.suggestion,
+        user: req.user ? req.user.username : "anonymous" 
+    });
+    newSuggestion.save(function(err) {
+        if (err) {
+            console.log("Error");
+            console.log(err);
+            res.send("Uh oh!");
+        }
+    });
+});
+
+
+router.get('/mygroups', function(req, res, next) {
+    req.session.returnTo = req.path;
+    if(req.user){
+        Group.find(
+            {
+                members: { $in: [req.user.username] }
+            },
+            "name url description",
+            function(err, results){
+                if (err) {
+                    console.log("Error");
+                    console.log(err);
+                    res.redirect("/uh-oh");
+                }
+                res.render('mygroups', { title: "My Groups", user: req.user, groups: results });
+        });
+    }
+    else {
+        return res.redirect('login');
+    }
+});
 
 router.get('/uh-oh', function(req, res, next) {
     let user = (req.user ? req.user : { username: "", email: ""}) 
@@ -157,8 +195,9 @@ router.post(/newGroup/, function(req, res, next) {
                 var newGroup = new Group({
                     name: req.body.name,
                     url: newUrl,
+                    description: req.body.description,
                     visibility: req.body.visibility,
-                    post: req.body.post,
+                    postpolicy: req.body.postpolicy,
                     owner: req.user.username,
                     admins: [req.user.username],
                     members: [req.user.username]

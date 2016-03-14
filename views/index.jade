@@ -18,7 +18,7 @@ block content
             form.col.s12#newGroup(method="post" action="/newGroup")
                     div.input-field.row
                         div.col.s12
-                            i.material-icons.prefix#name-icon mode_edit
+                            i.material-icons.prefix#name-icon create
                             div.preloader-wrapper.small.active.prefix#name-loading(style="display:none")
                                 div.spinner-layer
                                     div.circle-clipper.left
@@ -33,6 +33,11 @@ block content
                                 small Your group's url will be <em>http://ravie.events/<span class="url"></span></em>
                     div.input-field.row
                         div.col.s12
+                            i.material-icons.prefix assignment
+                            textarea.materialize-textarea#description(name="description")
+                            label(for="description") Description
+                    div.input-field.row
+                        div.col.s12.l6(style="padding-bottom:20px")
                             h5 Who can see your group?
                             p
                                 input#visibility-public(name="visibility" type="radio" value="public" checked)
@@ -43,17 +48,16 @@ block content
                             p
                                 input#visibility-hidden(name="visibility" type="radio" value="hidden")
                                 label(for="visibility-hidden") No one can even see that my group exists unless they are a member.
-                    div.input-field.row
-                        div.col.s12
+                        div.col.s12.l6
                             h5 Who can post an event in your group?
                             p
-                                input#post-public(name="post" type="radio" value="public" checked)
+                                input#post-public(name="postpolicy" type="radio" value="public" checked)
                                 label(for="post-public") Anyone can post an event in my group
                             p
-                                input#post-approval(name="post" type="radio" value="approval")
+                                input#post-approval(name="postpolicy" type="radio" value="approval")
                                 label(for="post-approval") Anyone can post an event in my group, but all events must be approved by an administrator of the group.
                             p
-                                input#post-admin(name="post" type="radio" value="admin")
+                                input#post-admin(name="postpolicy" type="radio" value="admin")
                                 label(for="post-admin") Only administrators can post an event to my group.
                     p.red-text.text-accent-4#error=error
         div.modal-footer

@@ -29,7 +29,7 @@ mixin nav-list(dropdownID, mobile)
             if(user && user.username)
                 li: a=user.username
                 li.divider
-                li: a My Groups
+                li: a(href="/mygroups") My Groups
                 li: a Settings
                 li: a(href="/logout") Logout
             else
@@ -40,6 +40,11 @@ mixin nav-list(dropdownID, mobile)
             i.material-icons(class=(mobile ? 'left' : false)) home
             if mobile
                 | Ravie
+    li
+        a.modal-trigger#suggestions-trigger(href="#suggestions" class=aClasses data-tooltip=(mobile ? false : "Suggestions"))&attributes(mobile ? false : hoverAttributes)
+            i.material-icons(class=(mobile ? 'left' : false)) comment
+            if mobile
+                | Suggestions
 
 div.navbar-fixed
     nav.orange.lighten-1(role='navigation')
@@ -53,3 +58,25 @@ div.navbar-fixed
                 +nav-list('user-menu')
             ul.side-nav#mobile-menu
                 +nav-list('mobile-user-menu', true)
+
+div.modal.bottom-sheet#suggestions
+        div.modal-content
+            h4
+                | Leave a suggestion
+                i.material-icons.right.modal-close close
+            form.col.s12#suggestion-form
+                div.input-field.row
+                    div.col.s12
+                    input#emoji-input(type="hidden"  value="none")
+                    p Which emoji most accurately reflects how you feel about the site?
+                    - var hoverAttributes = {"class":"tooltipped","data-position":"bottom", "data-delay":"50"};
+                    - var aClasses = "emoji-toggle btn-large waves-effect waves-orange";
+                    a.btn-flat(class=aClasses data-tooltip=("Sad"))&attributes(hoverAttributes): i.material-icons sentiment_dissatisfied
+                    a.btn-flat(class=aClasses data-tooltip=("Neutral"))&attributes(hoverAttributes): i.material-icons sentiment_neutral
+                    a.btn-flat(class=aClasses data-tooltip=("Happy"))&attributes(hoverAttributes): i.material-icons  sentiment_satisfied
+                    a.btn-flat(class=aClasses data-tooltip=("Very Happy"))&attributes(hoverAttributes): i.material-icons sentiment_very_satisfied
+                div.input-field.row
+                    div.col.s12
+                        textarea.materialize-textarea#suggestion(name="suggestion")
+                        label(for="suggestion") What is your suggestion? Your account and current page are attached automatically.
+                button.btn-flat.waves-effect.waves-orange.modal-close(type="submit") Send

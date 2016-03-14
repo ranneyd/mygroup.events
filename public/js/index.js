@@ -25,4 +25,22 @@ $(document).ready(function () {
         closeOnClear: false
     });
     $('.picker__footer button').addClass("btn-flat");
+
+    $(".emoji-toggle").click(function () {
+        $(".emoji-toggle").addClass("btn-flat");
+        $(this).removeClass("btn-flat");
+        $("#emoji-input").val($(this).attr("data-tooltip"));
+    });
+
+    $("#suggestion-form").submit(function (e) {
+        e.preventDefault();
+        $.ajax({
+            type: "POST",
+            url: "/suggestion",
+            data: {
+                sentiment: $("#emoji-input").val(),
+                suggestion: $("#suggestion").val()
+            }
+        });
+    });
 });
