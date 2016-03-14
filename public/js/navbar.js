@@ -43,9 +43,13 @@ $("#members").click(function () {
     $.post("/" + currentUrl + "/members", function (data) {
         for (var i = 0; i < data.length; ++i) {
             var p = $("<p class='flow-text'>");
-            var chip = "";
+            var chip = void 0;
             if (data[i].admin) {
                 chip = "<div class='chip'>admin</div>";
+            } else if (isAdmin === "true") {
+                chip = "<small><a href='#' data-user='" + data[i].name + "'>Promote to admin</a></small>";
+            } else {
+                chip = "";
             }
             p.append(data[i].name + " " + chip);
             $("#list-body").append(p);

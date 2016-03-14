@@ -159,7 +159,7 @@ router.get(/^\/([^\/]+)\/?$/, function(req, res, next) {
             if ( results !== null){
 
                 if ( results.visibility !== "hidden" || results.members.indexOf(user.username) !== -1){
-                    res.render('group', { title: results.name, group: true, currentUrl: req.params[0], user: user});
+                    res.render('group', { title: results.name, group: true, currentUrl: req.params[0], user: user, isAdmin: results.admins.indexOf(user.username) !== -1});
                 }
                 else{
                     res.render('404', { title: "Ravie", user: user });
