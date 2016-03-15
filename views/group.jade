@@ -12,7 +12,6 @@ block content
                 | Add a new event 
                 i.material-icons.right.modal-close close
             form.col.s12#newEvent(method="post" action="/" + currentUrl + "/new")
-                input(type="hidden" value=currentUrl name="group")
                 ul.tabs
                     li.tab.col.s4
                         a.active#basicInfoTab(href="#basicTab") Basic Info

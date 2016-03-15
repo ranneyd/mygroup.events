@@ -218,15 +218,15 @@ router.post(/^\/([^\/]+)\/members\/?$/, function(req, res, next) {
 //             }
 //             if ( results !== null){
 
-//                 if ( results.visibility === "public" || results.members.indexOf(user.username) !== -1){
+//                 if ( results.admins.indexOf(user.username) !== -1){
 //                     res.send(results.members);
 //                 }
 //                 else{
-//                     res.send("404. Sorry bro.");
+//                     res.send("Authentication error");
 //                 }
 //             }
 //             else {
-//                 res.send("404. Sorry bro.");
+//                 res.send("Authentication error");
 //             }
 //     });
 // });
@@ -274,6 +274,8 @@ router.post(/newGroup/, function(req, res, next) {
 });
 
 router.post(/^\/(.*)\/new/, function(req, res, next) {
+    let user = (req.user ? req.user : { username: "", email: ""}) 
+
     let dateStart = new Date(req.body.date);
     let dateEnd = new Date(req.body.date);
 
@@ -302,26 +304,53 @@ router.post(/^\/(.*)\/new/, function(req, res, next) {
         console.log("Invalid date for date end");
         res.redirect("/uh-oh");
     }
+    Group.findOne(
+        {
+            $or: [
+                {"url" : req.params[0]},
+            ]
+        },
+        "members admins postpolicy",
+        function(err, results){
+            if (err) {
+                console.log("Error");
+                console.log(err);
+                res.redirect("/uh-oh");
+            }
+            let isAdmin = results.admins.indexOf(user.username) !== -1;
+            let isMember = results.members.indexOf(user.username) !== -1;
+            if( (results.postpolicy === "admin" && !isAdmin) 
+              || results.postpolicy === "members" && !isMember) {
+                res.redirect("/" + req.params[0]);
+            }
 
-    var newEvent = new Event({
-        name: req.body.name,
-        dateStart: dateStart,
-        dateEnd: dateEnd,
-        description: req.body.description.replace(/\n/g, "<br>"),
-        banner: req.body['banner-picker'],
-        location: req.body.location,
-        rsvp: req.body.rsvp,
-        owner: req.user.username || "anonymous",
-        group: req.body.group
-    });
-    newEvent.save(function(err) {
-        if (err) {
-            console.log("Error");
-            console.log(err);
-            res.redirect("/uh-oh");
+            let pending = 0;
+            if(results.postpolicy === "approval" && !isAdmin){
+                pending = 1;
+            }
+            var newEvent = new Event({
+                name: req.body.name,
+                dateStart: dateStart,
+                dateEnd: dateEnd,
+                description: req.body.description.replace(/\n/g, "<br>"),
+                banner: req.body['banner-picker'],
+                location: req.body.location,
+                rsvp: req.body.rsvp,
+                owner: user.username || "anonymous",
+                group: req.params[0],
+                pending: pending
+            });
+            newEvent.save(function(err) {
+                if (err) {
+                    console.log("Error");
+                    console.log(err);
+                    res.redirect("/uh-oh");
+                }
+            });
+            res.redirect("/" + req.params[0]);
+
         }
-    });
-    res.redirect("/" + req.params[0]);
+    );
 });
 
 router.get(/^\/(.*)\/getEvents/, function(req, res, next) {
@@ -332,6 +361,7 @@ router.get(/^\/(.*)\/getEvents/, function(req, res, next) {
     Event.find({
             group: req.params[0],
             dateEnd: {$gt: after },
+            pending: {$ne: 1}
         }).sort("dateEnd").exec(function(err, events){
             if (err) {
                 console.log("Error");

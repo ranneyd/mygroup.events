@@ -34,4 +34,4 @@ $("#add-group-trigger").click(function(event){
         event.preventDefault();
         window.location.replace("/login");
     }
-})
+});
