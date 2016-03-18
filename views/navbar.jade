@@ -2,21 +2,30 @@
 - var aClasses = "waves-effect waves-light";
 
 mixin user-nav(dropdownID, mobile)
-    li
-        a.dropdown-button(class=aClasses data-activates=dropdownID data-tooltip=(mobile ? false : "My Account"))&attributes(mobile ? false : hoverAttributes)
-            i.material-icons(class=(mobile ? 'left' : false)) account_circle
-            if mobile
-                | My Account
-        ul.dropdown-content(id=dropdownID)
-            if(user && user.username)
+    if(user && user.username)
+        li
+            a.dropdown-button(class=aClasses data-activates=dropdownID data-tooltip=(mobile ? false : "My Account"))&attributes(mobile ? false : hoverAttributes)
+                i.material-icons(class=(mobile ? 'left' : false)) account_circle
+                if mobile
+                    | My Account
+            ul.dropdown-content(id=dropdownID)
                 li: a=user.username
                 li.divider
                 li: a.modal-trigger#mygroups(href="#list-modal") My Groups
                 li: a Settings
                 li: a(href="/logout") Logout
-            else
-                li: a(href="/login") Login
-                li: a(href="/register") Register
+    else
+        li
+            a(href="/login" class=aClasses data-tooltip=(mobile ? false : "Login"))&attributes(mobile ? false : hoverAttributes)
+                i.material-icons(class=(mobile ? 'left' : false)) assignment_ind
+                if mobile
+                    | Login
+        li
+            a(href="/register" class=aClasses data-tooltip=(mobile ? false : "Sign Up"))&attributes(mobile ? false : hoverAttributes)
+                i.material-icons(class=(mobile ? 'left' : false)) assignment
+                if mobile
+                    | Sign Up
+
 mixin nav-list(mobile)
     li
         a(href="/" class=aClasses data-tooltip=(mobile ? false : "Ravie"))&attributes(mobile ? false : hoverAttributes)
@@ -25,7 +34,7 @@ mixin nav-list(mobile)
                 | Ravie
     li
         a.modal-trigger#suggestions-trigger(href="#suggestions" class=aClasses data-tooltip=(mobile ? false : "Leave a suggestion"))&attributes(mobile ? false : hoverAttributes)
-            i.material-icons(class=(mobile ? 'left' : false)) comment
+            i.material-icons(class=(mobile ? 'left' : false)) feedback
             if mobile
                 | Leave a suggestion
 mixin group-nav(mobile)
@@ -51,7 +60,6 @@ mixin group-nav(mobile)
             i.material-icons(class=(mobile ? 'left' : false)) add
             if mobile
                 | Add a new event
-// wat #{group}
 div.navbar-fixed
     nav.orange.lighten-1(role='navigation')
         div.nav-wrapper.container
@@ -67,13 +75,14 @@ div.navbar-fixed
             ul.left.hide-on-med-and-down
                 +nav-list(false)
 
-            a.button-collapse#mobile-menu-button(href='#' data-activates='mobile-menu')
+            a.button-collapse#mobile-menu-button(href='#' data-activates='slide-out')
                 i.material-icons menu
-            ul.side-nav#mobile-menu
+            ul.side-nav#slide-out
                 if group
                     +group-nav(true)
-                +user-nav('mobile-user-menu', true)
                 +nav-list(true)
+                +user-nav('mobile-user-menu', true)
+
 
 div.modal.bottom-sheet#suggestions
         div.modal-content

@@ -16,7 +16,7 @@ $("#suggestion-form").submit(function(e){
     });
 });
 $("#mobile-menu-button").sideNav({
-    edge: "left"
+    edge: "left",
 });
 
 $("#mygroups").click(function(){

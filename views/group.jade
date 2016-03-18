@@ -29,11 +29,11 @@ block content
                             i.material-icons.prefix date_range
                             input.datepicker#date(name="date" type="date" required)
                             label(for="date") What date is it?
-                        div.input-field.col.s6
+                        div.input-field.col.s12.m6
                             i.material-icons.prefix access_time
                             input.validate#timeStart(name="timeStart" type="text" required)
                             label(for="timeStart") When does it start?
-                        div.input-field.col.s6
+                        div.input-field.col.s12.m6
                             i.material-icons.prefix access_time
                             input.validate#timeEnd(name="timeEnd" type="text" required)
                             label(for="timeEnd") When is it over?
@@ -66,20 +66,20 @@ block content
                         //-         input(type="file")
                         //-     div.file-path-wrapper
                         //-         input.file-path.validate(type="text" placeholder="Upload an image")
-                div.flex-box-fill.col.s12#detailsTab
-                    div.flex1.flex.row.no-margin-bottom
-                        div.flex-box-fill.col.s6
+                div.col.s12#detailsTab
+                    div.row.no-margin-bottom
+                        div.col.s12.m6
                             h5 Location
-                            div.row.no-margin-bottom
+                            div.row
                                 div.input-field.col.s12
                                     i.material-icons.prefix add_location
                                     input.validate#location(name="location" type="text" required)
                                     label(for='location') Where is your event?
                                 div.col.s12
                                     a.waves-effect.waves-light.btn#enter-location Show me on the map
-                            div.flex-box-fill.video-container
-                                iframe.flex1.map(allowfullscreen frameborder="0" src="https://www.google.com/maps/embed/v1/view?zoom=3&center=37.0902,-95.7129&key=AIzaSyA_pbDU2WPMoChRE2oFhjJVNJHPI5-1Ewg" )
-                        div.col.s6
+                            //- div.flex-box-fill.video-container
+                            //-     iframe.flex1.map(allowfullscreen frameborder="0" src="https://www.google.com/maps/embed/v1/view?zoom=3&center=37.0902,-95.7129&key=AIzaSyA_pbDU2WPMoChRE2oFhjJVNJHPI5-1Ewg" )
+                        div.col.s12.m6
                             h5 How to Display RSVPs
                             div.row
                                 div.col.s12
