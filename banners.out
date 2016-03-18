@@ -1,0 +1,37 @@
+{"_id":{"$oid":"56cbe4e0ee8b9e96cb872354"},"name":"Beach","url":"beach.png","tags":["beach","ocean","swim","sand","outdoors","outside"]}
+{"_id":{"$oid":"56cbe561ee8b9e96cb872356"},"name":"Art Museum","url":"artmuseum.png","tags":["art","museum","painting","sculpture"]}
+{"_id":{"$oid":"56cbe577ee8b9e96cb872357"},"name":"Bar","url":"bar.png","tags":["bar","drinks","party","out"]}
+{"_id":{"$oid":"56cbee5eee8b9e96cb872358"},"name":"Laughing","url":"barlaugh.png","tags":["laughing","bar","night","drinks"]}
+{"_id":{"$oid":"56cbee5eee8b9e96cb872359"},"name":"Basketball","url":"basketball.png","tags":["basketball","sports","live","game"]}
+{"_id":{"$oid":"56cbee5eee8b9e96cb87235a"},"name":"Board Game","url":"catan.png","tags":["board","game","geek","catan","nerd"]}
+{"_id":{"$oid":"56cbee5eee8b9e96cb87235b"},"name":"Club","url":"club.png","tags":["club","dancing","party","lights"]}
+{"_id":{"$oid":"56cbee5eee8b9e96cb87235c"},"name":"Convention","url":"comiccon.png","tags":["convention","expo","comic","con"]}
+{"_id":{"$oid":"56cbee5eee8b9e96cb87235d"},"name":"Concert","url":"concert.png","tags":["concert","live","music"]}
+{"_id":{"$oid":"56cbee5eee8b9e96cb87235e"},"name":"Dancing Lesson","url":"dancing.png","tags":["dancing","lesson","ballroom","salsa"]}
+{"_id":{"$oid":"56cbee5eee8b9e96cb87235f"},"name":"Dancing","url":"dancing2.png","tags":["dancing","lesson","ballroom","salsa"]}
+{"_id":{"$oid":"56cbee5eee8b9e96cb872360"},"name":"Mixing","url":"dj.png","tags":["music","dj","mixing"]}
+{"_id":{"$oid":"56cbee5eee8b9e96cb872361"},"name":"Go Karts","url":"gokart.png","tags":["gokart","gokarts","go","kart","racing","driving"]}
+{"_id":{"$oid":"56cbee5eee8b9e96cb872362"},"name":"Guitar","url":"guitar.png","tags":["music","guitar","lesson","live","concert"]}
+{"_id":{"$oid":"56cbee5eee8b9e96cb872363"},"name":"Gym","url":"gym.png","tags":["gym","exercise"]}
+{"_id":{"$oid":"56cbee5eee8b9e96cb872364"},"name":"Volunteering","url":"habitat.png","tags":["building","helping","volunteering","volunteer","habitat","community"]}
+{"_id":{"$oid":"56cbee5eee8b9e96cb872365"},"name":"Hiking","url":"hiking.png","tags":["hiking","outside","outdoors","nature","exercise"]}
+{"_id":{"$oid":"56cbee5eee8b9e96cb872366"},"name":"Together","url":"jump.png","tags":["jump","together","family","group","community"]}
+{"_id":{"$oid":"56cbee5eee8b9e96cb872367"},"name":"Makers","url":"makers.png","tags":["makers","build","nerd","geek"]}
+{"_id":{"$oid":"56cbee5eee8b9e96cb872368"},"name":"Mall","url":"mall.png","tags":["shopping","mall"]}
+{"_id":{"$oid":"56cbee5eee8b9e96cb872369"},"name":"Party","url":"party.png","tags":["party","paint","drinks","live","music"]}
+{"_id":{"$oid":"56cbee5eee8b9e96cb87236a"},"name":"Pool","url":"pool.png","tags":["pool","swim","exercise","outside","outdoors","exercise","party"]}
+{"_id":{"$oid":"56cbee5eee8b9e96cb87236b"},"name":"Restaurant","url":"restaurant.png","tags":["dinner","food","eating","restaurant"]}
+{"_id":{"$oid":"56cbee5eee8b9e96cb87236c"},"name":"Table Top","url":"rpg.png","tags":["rpg","table","gathering","magic","dungeons","dragons","role","playing"]}
+{"_id":{"$oid":"56cbee5eee8b9e96cb87236d"},"name":"Skiing","url":"skiing.png","tags":["snow","skiing","outside","outdoors","lifts"]}
+{"_id":{"$oid":"56cbee5eee8b9e96cb87236e"},"name":"Soup Kitchen","url":"soupkitchen.png","tags":["volunteering","soup","kitchen","help","community"]}
+{"_id":{"$oid":"56cbee5eee8b9e96cb87236f"},"name":"Sports","url":"sports.png","tags":["soccer","sports","outdoors","outside","exercise","competition"]}
+{"_id":{"$oid":"56cbee5eee8b9e96cb872370"},"name":"Bowling","url":"bowling.png","tags":["bowling","sports","competition"]}
+{"_id":{"$oid":"56cbee5eee8b9e96cb872371"},"name":"Tennis","url":"tennis.png","tags":["tennis","sports","competition","outside","outdoors","exercise"]}
+{"_id":{"$oid":"56cbee5eee8b9e96cb872372"},"name":"Theater","url":"theater.png","tags":["theater","movies","movie","art"]}
+{"_id":{"$oid":"56cbee5eee8b9e96cb872373"},"name":"Movies","url":"movies.png","tags":["theater","movies","movie","art","obama"]}
+{"_id":{"$oid":"56cbee5eee8b9e96cb872374"},"name":"Forest","url":"trail.png","tags":["hiking","nature","outdoors","outside","exercise"]}
+{"_id":{"$oid":"56cbee5eee8b9e96cb872375"},"name":"Museum","url":"trex.png","tags":["natural","history","museum","science"]}
+{"_id":{"$oid":"56cbee5eee8b9e96cb872376"},"name":"Video Games","url":"xbox.png","tags":["xbox","video","games"]}
+{"_id":{"$oid":"56cbee5eee8b9e96cb872377"},"name":"Yoga","url":"yoga.png","tags":["yoga","lesson","exercise"]}
+{"_id":{"$oid":"56cbee60ee8b9e96cb872378"},"name":"Zoo","url":"zoo.png","tags":["animals","zoo","outside","outdoors"]}
+{"_id":{"$oid":"56cc064fee8b9e96cb872379"},"name":"Lights","url":"lights.png","tags":["lights","default"]}
