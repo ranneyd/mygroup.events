@@ -35,12 +35,12 @@ mixin group-nav(mobile)
                 i.material-icons(class=(mobile ? 'left' : false)) view_agenda
                 if mobile
                     | List view
-    else
-        li
-            a(class=aClasses data-tooltip=(mobile ? false : "Calendar view"))&attributes(mobile ? false : hoverAttributes)
-                i.material-icons(class=(mobile ? 'left' : false)) event
-                if mobile
-                    | Calendar view
+    //- else
+    //-     li
+    //-         a(class=aClasses data-tooltip=(mobile ? false : "Calendar view"))&attributes(mobile ? false : hoverAttributes)
+    //-             i.material-icons(class=(mobile ? 'left' : false)) event
+    //-             if mobile
+    //-                 | Calendar view
     li
         a.modal-trigger#members(class=aClasses href="#list-modal" data-tooltip=(mobile ? false : "Members"))&attributes(mobile ? false : hoverAttributes)
             i.material-icons(class=(mobile ? 'left' : false)) people
@@ -69,9 +69,10 @@ div.navbar-fixed
             a.button-collapse#mobile-menu-button(href='#' data-activates='mobile-menu')
                 i.material-icons menu
             ul.side-nav#mobile-menu
-                +nav-list(true)
-                +group-nav(true)
+                if group
+                    +group-nav(true)
                 +user-nav('mobile-user-menu', true)
+                +nav-list(true)
 
 div.modal.bottom-sheet#suggestions
         div.modal-content
