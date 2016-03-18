@@ -133,9 +133,9 @@ $.get(`/${currentUrl}/getEvents`, data => {
                                 `<p>${new Date(elem.dateStart).toLocaleString('en-US', dateOptions)}</p>` + 
                                 `<p>${timeFormatter(elem.dateStart)} - ${timeFormatter(elem.dateEnd)} ${timeMessage}</p>` +
                             '</div>' +
-                            '<div class="col s4">' +
-                                `  <a class="right waves-effect waves-orange btn-flat">RSVP</a>` +
-                            '</div>' +
+                            // '<div class="col s4">' +
+                            //     `  <a class="right waves-effect waves-orange btn-flat">RSVP</a>` +
+                            // '</div>' +
                         '</div>' +
                     '</div>' +
                     '<div class="card-reveal">' +
