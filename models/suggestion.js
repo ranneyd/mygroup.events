@@ -5,7 +5,8 @@ var SuggestionSchema = new Schema({
     sentiment: { type: String },
     suggestion: {type: String},
     user: { type: String },
-    url: { type: String }
+    url: { type: String },
+    ip: { type: String }
 });
  
 module.exports = mongoose.model('Suggestion', SuggestionSchema);
