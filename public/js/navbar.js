@@ -13,10 +13,11 @@ $("#suggestion-form").submit(function (e) {
         url: "/suggestion",
         data: {
             sentiment: $("#emoji-input").val(),
-            suggestion: $("#suggestion").val()
+            suggestion: $("#suggestion").val(),
+            sendUrl: $("#sendUrl").prop("checked"),
+            sendUser: $("#sendUser").prop("checked")
         },
         success: function success(response) {
-            console.log("lmao city?");
             Materialize.toast("Thank you for your suggestion!", 4000);
         }
     });

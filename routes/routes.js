@@ -3,6 +3,11 @@
 var express = require('express');
 var passport = require('passport');
 var router = express.Router();
+
+var nodemailer = require("nodemailer");
+var transporter = nodemailer.createTransport('smtps://ravieevents%40gmail.com:pass@smtp.gmail.com');
+
+
 var Group = require('../models/group.js');
 var Banner = require('../models/banner.js');
 var Event = require('../models/event.js');
@@ -101,19 +106,37 @@ router.get('/ajax/getBannerImages', function(req, res, next) {
     });
 });
 router.post('/suggestion', function(req, res, next) {
-    console.log(req.url);
-    var newSuggestion = new Suggestion({
+    console.log(req.body)
+    let suggestionConfig = {
         sentiment: req.body.sentiment,
         suggestion: req.body.suggestion,
-        user: req.user ? req.user.username : "anonymous" ,
-        url: req.url
-    });
+        user: req.user && req.body.sendUser === "on" ? req.user.username : "anonymous" ,
+        url: req.body.sendUrl === "on" ? req.url : "anonymous"
+    };
+    var newSuggestion = new Suggestion(suggestionConfig);
     newSuggestion.save(function(err) {
         if (err) {
             console.log("Error");
             console.log(err);
             res.send("Uh oh!");
         }
+        var mailOptions = {
+            from: '"Suggestions" <ravieevents@gmail.com>', // sender address
+            to: 'ravieevents@gmail.com', // list of receivers
+            subject: 'Suggestion', // Subject line
+            text: `User: ${suggestionConfig.user}\n`
+                + `Url: ${suggestionConfig.url}\n`
+                + `Sentiment: ${suggestionConfig.sentiment}\n`
+                + `Suggestion: ${suggestionConfig.suggestion}`, // plaintext body
+        };
+
+        // send mail with defined transport object
+        transporter.sendMail(mailOptions, function(error, info){
+            if(error){
+                return console.log(error);
+            }
+            console.log('Message sent: ' + info.response);
+        });
         res.send("success");
     });
 });
