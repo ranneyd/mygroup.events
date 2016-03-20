@@ -110,8 +110,8 @@ router.post('/suggestion', function(req, res, next) {
     let suggestionConfig = {
         sentiment: req.body.sentiment,
         suggestion: req.body.suggestion,
-        user: req.user && req.body.sendUser === "on" ? req.user.username : "anonymous" ,
-        url: req.body.sendUrl === "on" ? req.url : "anonymous"
+        user: req.user && req.body.sendUser ? req.user.username : "anonymous" ,
+        url: req.body.sendUrl ? req.url : "anonymous"
     };
     var newSuggestion = new Suggestion(suggestionConfig);
     newSuggestion.save(function(err) {
