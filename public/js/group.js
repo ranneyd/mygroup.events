@@ -39,6 +39,8 @@ var timePickerValidator = function timePickerValidator() {
             return false;
         } else if (eAMPM === "pm" && sAMPM === "am") {
             return true;
+        } else if (sHours === 12 && eHours !== 12) {
+            return true;
         } else if (sHours > eHours) {
             return false;
         } else if (sHours < eHours) {
