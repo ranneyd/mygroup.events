@@ -101,10 +101,12 @@ router.get('/ajax/getBannerImages', function(req, res, next) {
     });
 });
 router.post('/suggestion', function(req, res, next) {
+    console.log(req.url);
     var newSuggestion = new Suggestion({
         sentiment: req.body.sentiment,
         suggestion: req.body.suggestion,
-        user: req.user ? req.user.username : "anonymous" 
+        user: req.user ? req.user.username : "anonymous" ,
+        url: req.url
     });
     newSuggestion.save(function(err) {
         if (err) {

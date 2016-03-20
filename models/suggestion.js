@@ -4,7 +4,8 @@ var mongoose = require('mongoose'),
 var SuggestionSchema = new Schema({
     sentiment: { type: String },
     suggestion: {type: String},
-    user: { type: String }
+    user: { type: String },
+    url: { type: String }
 });
  
 module.exports = mongoose.model('Suggestion', SuggestionSchema);
