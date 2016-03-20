@@ -9,10 +9,20 @@ html
     link(rel='stylesheet', href='/css/style.css')
     link(rel='stylesheet', href='/css/timepicker/main.css')
   body
-    block navbar
-    div.section.no-pad-bot#index-banner
-        div.container#content
-            block content
+    header
+        block navbar
+    main
+        div.section.no-pad-bot#index-banner
+            div.container#content
+                block content
+    footer.page-footer.orange.lighten-1
+        div.container
+            div.row
+                div.col.s12
+                    p.center-align
+                        a.grey-text.text-lighten-4.modal-trigger(href="#suggestions") Leave a suggestion
+                        span.grey-text.text-lighten-4 &nbsp;&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;&nbsp;
+                        a.grey-text.text-lighten-4(href="https://github.com/ranneyd/ravie") Fork this on Github
     script(type='text/javascript' src='/js/jquery-2.2.0.min.js')
     script(type='text/javascript' src='/js/materialize.min.js')
     script(type='text/javascript' src='/js/picker.js')

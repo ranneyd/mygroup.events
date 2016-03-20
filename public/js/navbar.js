@@ -14,6 +14,10 @@ $("#suggestion-form").submit(function (e) {
         data: {
             sentiment: $("#emoji-input").val(),
             suggestion: $("#suggestion").val()
+        },
+        success: function success(response) {
+            console.log("lmao city?");
+            Materialize.toast("Thank you for your suggestion!", 4000);
         }
     });
 });

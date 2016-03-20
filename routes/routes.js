@@ -112,6 +112,7 @@ router.post('/suggestion', function(req, res, next) {
             console.log(err);
             res.send("Uh oh!");
         }
+        res.send("success");
     });
 });
 
