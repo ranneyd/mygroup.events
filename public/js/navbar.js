@@ -26,11 +26,11 @@ $("#mobile-menu-button").sideNav({
     edge: "left"
 });
 
-$("#mygroups").click(function () {
+$(".mygroups").click(function () {
     $("#list-title").html("My Groups");
     $("#list-body").html("");
     $("#list-progress").show();
-    $.post("/mygroups", function (data) {
+    $.post("./mygroups", function (data) {
         for (var i = 0; i < data.length; ++i) {
             var p = $("<p class='flow-text'>");
             p.append($("<a href=\"/" + data[i].url + "\">").html("" + data[i].name));
@@ -41,7 +41,7 @@ $("#mygroups").click(function () {
     });
 });
 
-$("#members").click(function () {
+$(".members").click(function () {
     $("#list-title").html(title + " Members");
     $("#list-body").html("");
     $("#list-progress").show();

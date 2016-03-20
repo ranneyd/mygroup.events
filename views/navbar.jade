@@ -11,7 +11,7 @@ mixin user-nav(dropdownID, mobile)
             ul.dropdown-content(id=dropdownID)
                 li: a=user.username
                 li.divider
-                li: a.modal-trigger#mygroups(href="#list-modal") My Groups
+                li: a.modal-trigger.mygroups(href="#list-modal") My Groups
                 li: a Settings
                 li: a(href="/logout") Logout
     else
@@ -33,7 +33,7 @@ mixin nav-list(mobile)
             if mobile
                 | Ravie
     li
-        a.modal-trigger#suggestions-trigger(href="#suggestions" class=aClasses data-tooltip=(mobile ? false : "Leave a suggestion"))&attributes(mobile ? false : hoverAttributes)
+        a.modal-trigger(href="#suggestions" class=aClasses data-tooltip=(mobile ? false : "Leave a suggestion"))&attributes(mobile ? false : hoverAttributes)
             i.material-icons(class=(mobile ? 'left' : false)) feedback
             if mobile
                 | Leave a suggestion
@@ -51,7 +51,7 @@ mixin group-nav(mobile)
     //-             if mobile
     //-                 | Calendar view
     li
-        a.modal-trigger#members(class=aClasses href="#list-modal" data-tooltip=(mobile ? false : "Members"))&attributes(mobile ? false : hoverAttributes)
+        a.modal-trigger.members(class=aClasses href="#list-modal" data-tooltip=(mobile ? false : "Members"))&attributes(mobile ? false : hoverAttributes)
             i.material-icons(class=(mobile ? 'left' : false)) people
             if mobile
                 | Members
