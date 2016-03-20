@@ -17,36 +17,16 @@ html
                 block content
     footer.page-footer.orange.lighten-1
         div.container
-            div.row.hide-on-small-only
-                div.col.s12.center-align
-                    mixin divider()
-                        span.hide-on-small-only.grey-text.text-lighten-4 &nbsp;&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;&nbsp;
-                    unless(user && user.username)
-                        a.grey-text.text-lighten-4(href="/Login") Login
-                        +divider()
-                        a.grey-text.text-lighten-4(href="/register") Sign Up
-                        +divider()
-                    a.grey-text.text-lighten-4.modal-trigger(href="#suggestions") Leave a suggestion
-                    +divider()
-                    a.grey-text.text-lighten-4(href="https://github.com/ranneyd/ravie" target="_blank") Fork this on Github
-                    +divider()
-                    a.grey-text.text-lighten-4(href="mailto:ravieevents@gmail.com") Contact
-            div.row.no-margin-bottom.hide-on-med-and-up
-                div.col.s8
-                    div.row
-                        div.col.s12
-                            a.grey-text.text-lighten-4.modal-trigger(href="#suggestions") Leave a suggestion
-                        div.col.s12
-                            a.grey-text.text-lighten-4(href="https://github.com/ranneyd/ravie" target="_blank") Fork this on Github
-                        div.col.s12
-                            a.grey-text.text-lighten-4(href="mailto:ravieevents@gmail.com") Contact
-                unless(user && user.username)
-                    div.col.s4
-                        div.row
-                            div.col.s12
-                                a.grey-text.text-lighten-4(href="/Login") Login
-                            div.col.s12
-                                a.grey-text.text-lighten-4(href="/register") Sign Up
+            div.row
+                div.col.s12
+                    p.center-align
+                        a.grey-text.text-lighten-4.modal-trigger(href="/register") Signup
+                        span.grey-text.text-lighten-4 &nbsp;&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;&nbsp;
+                        a.grey-text.text-lighten-4.modal-trigger(href="/login") Register
+                        span.grey-text.text-lighten-4 &nbsp;&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;&nbsp;
+                        a.grey-text.text-lighten-4.modal-trigger(href="#suggestions") Leave a suggestion
+                        span.grey-text.text-lighten-4 &nbsp;&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;&nbsp;
+                        a.grey-text.text-lighten-4(href="https://github.com/ranneyd/ravie") Fork this on Github
     script(type='text/javascript' src='/js/jquery-2.2.0.min.js')
     script(type='text/javascript' src='/js/materialize.min.js')
     script(type='text/javascript' src='/js/picker.js')
