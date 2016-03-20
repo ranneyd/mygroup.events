@@ -106,12 +106,15 @@ router.get('/ajax/getBannerImages', function(req, res, next) {
     });
 });
 router.post('/suggestion', function(req, res, next) {
-    console.log(req.body)
     let suggestionConfig = {
         sentiment: req.body.sentiment,
         suggestion: req.body.suggestion,
         user: req.user && req.body.sendUser === "on" ? req.user.username : "anonymous" ,
-        url: req.body.sendUrl === "on" ? req.url : "anonymous"
+        url: req.body.sendUrl === "on" ? req.url : "anonymous",
+        ip: req.headers['x-forwarded-for'] ||
+            req.connection.remoteAddress || 
+            req.socket.remoteAddress ||
+            req.connection.socket.remoteAddress
     };
     var newSuggestion = new Suggestion(suggestionConfig);
     newSuggestion.save(function(err) {
@@ -126,6 +129,7 @@ router.post('/suggestion', function(req, res, next) {
             subject: 'Suggestion', // Subject line
             text: `User: ${suggestionConfig.user}\n`
                 + `Url: ${suggestionConfig.url}\n`
+                + `IP: ${suggestionConfig.ip}\n`
                 + `Sentiment: ${suggestionConfig.sentiment}\n`
                 + `Suggestion: ${suggestionConfig.suggestion}`, // plaintext body
         };
