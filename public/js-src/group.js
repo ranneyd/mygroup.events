@@ -70,6 +70,11 @@ var getGoogleMapsURL = location => {
 $.get(`/${currentUrl}/getEvents`, data => {
     if( data.length === 0 ){
         $("#no-events").show();
+        return;
+    }
+    if(data === "private") {
+        $("#private").show();
+        return;
     }
     // I could put in an else, but then I'd have to indent.
     data.forEach(elem => {

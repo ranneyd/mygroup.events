@@ -332,9 +332,7 @@ router.post(/^\/(.*)\/new/, function(req, res, next) {
     }
     Group.findOne(
         {
-            $or: [
-                {"url" : req.params[0]},
-            ]
+            "url" : req.params[0]
         },
         "members admins postpolicy",
         function(err, results){
@@ -380,24 +378,48 @@ router.post(/^\/(.*)\/new/, function(req, res, next) {
 });
 
 router.get(/^\/(.*)\/getEvents/, function(req, res, next) {
-    var after = new Date();
-    if(req.query.after){
-        var after = new Date(req.query.after);
-    }
-    Event.find({
-            group: req.params[0],
-            dateEnd: {$gt: after },
-            pending: {$ne: 1}
-        }).sort("dateEnd").exec(function(err, events){
+    let user = (req.user ? req.user : { username: "", email: ""}) 
+
+    Group.findOne(
+        {
+            "url" : req.params[0]
+        },
+        "members admins visibility",
+        function(err, results){
             if (err) {
                 console.log("Error");
                 console.log(err);
                 res.redirect("/uh-oh");
             }
-            else {
-                res.send(events);
+            let isMember = results.members.indexOf(user.username) !== -1;
+            if(results.visibility === "public" || isMember) {
+                var after = new Date();
+                if(req.query.after){
+                    var after = new Date(req.query.after);
+                }
+                Event.find({
+                        group: req.params[0],
+                        dateEnd: {$gt: after },
+                        pending: {$ne: 1}
+                    }).sort("dateEnd").exec(function(err, events){
+                        if (err) {
+                            console.log("Error");
+                            console.log(err);
+                            res.redirect("/uh-oh");
+                        }
+                        else {
+                            res.send(events);
+                        }
+                    });
             }
-        });
+            else if (results.visibility === "private"){
+                res.send("private");
+            }
+            else{
+                res.redirect("/404");
+            }
+        }
+    );
 });
 
 // 404

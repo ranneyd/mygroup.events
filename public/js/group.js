@@ -84,6 +84,11 @@ var getGoogleMapsURL = function getGoogleMapsURL(location) {
 $.get("/" + currentUrl + "/getEvents", function (data) {
     if (data.length === 0) {
         $("#no-events").show();
+        return;
+    }
+    if (data === "private") {
+        $("#private").show();
+        return;
     }
 
     data.forEach(function (elem) {
