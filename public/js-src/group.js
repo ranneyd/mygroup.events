@@ -292,3 +292,59 @@ $("#banner-row").hide();
 $("#enter-location").click(function(){
     $(".map").attr("src", getGoogleMapsURL($("#location").val()))
 });
+
+
+$(".members").click(function(){
+    $("#list-title").html(`${title} Members`);
+
+    // Invite box
+    let inviteRow = $("<div class='row'>");
+    let inviteHeader = $("<p>").html("Invite people to your group");
+    let nameInput = $("<input>")
+        .attr("type", "text")
+        .attr("id", "inviteInput")
+        .attr("placeholder", "Username or Email")
+        .css({
+            "width":"auto",
+            "min-width": "300px",
+            "margin-right": "20px",
+        });
+    let inviteSubmit = $("<button>")
+        .addClass("waves-effect")
+        .addClass("waves-light")
+        .addClass("btn")
+        .html("Invite")
+        .click(function(){
+            $.ajax({
+                method:"post",
+                url: `/${currentUrl}/invite`,
+                data: {
+                    name: $("#inviteInput").val()
+                },
+                success: (data) => {
+                    Materialize.toast(data, 4000)
+                }
+            });
+        });
+    inviteRow.append(inviteHeader).append(nameInput).append(inviteSubmit);
+    $("#list-body").html("").append(inviteRow);
+    $("#list-progress").show();
+    $.post(`/${currentUrl}/members`, data => {
+        for(let i = 0; i < data.length; ++i) {
+            let p = $("<p class='flow-text'>");
+            let chip;
+            if(data[i].admin) {
+                chip = "<div class='chip'>admin</div>";
+            }
+            else if (isAdmin === "true") {
+                chip = `<small><a href='#' data-user='${data[i].name}'>Promote to admin</a></small>`;
+            }
+            else{
+                chip = "";
+            }
+            p.append(`${data[i].name} ${chip}`);
+            $("#list-body").append(p);
+        }
+        $("#list-progress").hide();
+    });
+});

@@ -10,7 +10,8 @@ var GroupSchema = new Schema({
     owner: { type: String},
     admins: { type: Array},
     members: { type: Array},
-    pending: { type: Number}
+    requests: { type: Array},
+    invites: {type: Array}
 });
  
 module.exports = mongoose.model('Group', GroupSchema);

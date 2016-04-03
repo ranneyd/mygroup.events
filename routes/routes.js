@@ -118,6 +118,7 @@ router.post('/suggestion', function(req, res, next) {
             console.log("Error");
             console.log(err);
             res.send("Uh oh!");
+            return;
         }
         var mailOptions = {
             from: '"Suggestions" <ravieevents@gmail.com>', // sender address
@@ -153,7 +154,8 @@ router.post('/mygroups', function(req, res, next) {
                 if (err) {
                     console.log("Error");
                     console.log(err);
-                    res.send("/uh-oh");
+                    res.send("uh-oh");
+                    return;
                 }
                 res.send(results);
         });
@@ -208,6 +210,7 @@ router.post(/^\/([^\/]+)\/members\/?$/, function(req, res, next) {
                 console.log("Error");
                 console.log(err);
                 res.send("uh-oh");
+                return;
             }
             if ( results !== null){
 
@@ -256,6 +259,56 @@ router.post(/^\/([^\/]+)\/members\/?$/, function(req, res, next) {
 //             }
 //     });
 // });
+// invite
+router.post(/^\/([^\/]+)\/invite\/?$/, function(req, res, next) {
+    let user = (req.user ? req.user : { username: "", email: ""})
+    User.findOne({
+        $or:[
+            {username: req.body.name},
+            {email: req.body.name.toLowerCase()}
+        ]
+    },
+    (err, result) =>{
+        console.log("Got the result?");
+        console.log(err);
+        console.log(result);
+        if (err) {
+            console.log("Error");
+            console.log(err);
+            res.send("uh-oh");
+            return;
+        }
+        if( !result ){
+            console.log("Uh oh, no user found pls");
+            res.send(`User not found`);
+            return; // express confirmed this dumb
+        }
+        let invitee = result.username;
+        Group.update({
+                "url": req.params[0],
+                "admins": {
+                    $in: [user.username]
+                },
+                "invites": {
+                    $nin: [req.body.name]
+                }
+            },
+            {
+                $push: { "invites": req.body.name}
+            },
+            {},
+            function (err, results){
+                if (err) {
+                    console.log("Error");
+                    console.log(err);
+                    res.send("uh-oh");
+                }
+                else {
+                    res.send(`Invite sent to ${invitee}`);
+                }
+        });
+    });
+});
 router.post(/newGroup/, function(req, res, next) {
     Group.findOne(
         {
@@ -285,7 +338,9 @@ router.post(/newGroup/, function(req, res, next) {
                     postpolicy: req.body.postpolicy,
                     owner: req.user.username,
                     admins: [req.user.username],
-                    members: [req.user.username]
+                    members: [req.user.username],
+                    requests: [],
+                    invites: []
                 });
                 newGroup.save(function(err) {
                     if (err) {
