@@ -29,12 +29,24 @@ $(".mygroups").click(function(){
     $("#list-body").html("");
     $("#list-progress").show();
     $.post("./mygroups", data => {
+        let groups = $("<div>");
+        let invites = $("<div>");
         for(let i = 0; i < data.length; ++i) {
             let p = $("<p class='flow-text'>");
             p.append($(`<a href="/${data[i].url}">`).html(`${data[i].name}`));
             p.append(` - ${data[i].description}`);
-            $("#list-body").append(p);
+            // Don't ask about the [0] thing. JavaScript man...
+            if(data[i].invites[0]){
+                invites.append(p);
+            }
+            else{
+                groups.append(p);
+            }
         }
+        $("#list-body").append($("<h4>").html("Invites"));
+        $("#list-body").append(invites);
+        $("#list-body").append($("<h4>").html("Groups"));
+        $("#list-body").append(groups);
         $("#list-progress").hide();
     });
 });

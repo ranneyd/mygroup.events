@@ -87,7 +87,6 @@ $.get("/" + currentUrl + "/getEvents", function (data) {
         return;
     }
     if (data === "private") {
-        $("#private").show();
         return;
     }
 
@@ -238,7 +237,7 @@ $(".members").click(function () {
     $("#list-title").html(title + " Members");
 
     var inviteRow = $("<div class='row'>");
-    var inviteHeader = $("<p>").html("Invite people to your group");
+    var inviteHeader = $("<p>").html("Invite people to your group <small>Note: they must have an account to receive the invite</small>");
     var nameInput = $("<input>").attr("type", "text").attr("id", "inviteInput").attr("placeholder", "Username or Email").css({
         "width": "auto",
         "min-width": "300px",

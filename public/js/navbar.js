@@ -31,12 +31,23 @@ $(".mygroups").click(function () {
     $("#list-body").html("");
     $("#list-progress").show();
     $.post("./mygroups", function (data) {
+        var groups = $("<div>");
+        var invites = $("<div>");
         for (var i = 0; i < data.length; ++i) {
             var p = $("<p class='flow-text'>");
             p.append($("<a href=\"/" + data[i].url + "\">").html("" + data[i].name));
             p.append(" - " + data[i].description);
-            $("#list-body").append(p);
+
+            if (data[i].invites[0]) {
+                invites.append(p);
+            } else {
+                groups.append(p);
+            }
         }
+        $("#list-body").append($("<h4>").html("Invites"));
+        $("#list-body").append(invites);
+        $("#list-body").append($("<h4>").html("Groups"));
+        $("#list-body").append(groups);
         $("#list-progress").hide();
     });
 });

@@ -72,8 +72,7 @@ $.get(`/${currentUrl}/getEvents`, data => {
         $("#no-events").show();
         return;
     }
-    if(data === "private") {
-        $("#private").show();
+    if( data === "private") {
         return;
     }
     // I could put in an else, but then I'd have to indent.
@@ -299,7 +298,7 @@ $(".members").click(function(){
 
     // Invite box
     let inviteRow = $("<div class='row'>");
-    let inviteHeader = $("<p>").html("Invite people to your group");
+    let inviteHeader = $("<p>").html("Invite people to your group <small>Note: they must have an account to receive the invite</small>");
     let nameInput = $("<input>")
         .attr("type", "text")
         .attr("id", "inviteInput")

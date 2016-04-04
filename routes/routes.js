@@ -147,9 +147,12 @@ router.post('/mygroups', function(req, res, next) {
     if(req.user){
         Group.find(
             {
-                members: { $in: [req.user.username] }
+                $or:[
+                    {members: { $in: [req.user.username] }},
+                    {invites: { $in: [req.user.username] }}
+                ]
             },
-            "name url description",
+            "name url description members invites",
             function(err, results){
                 if (err) {
                     console.log("Error");
@@ -157,7 +160,15 @@ router.post('/mygroups', function(req, res, next) {
                     res.send("uh-oh");
                     return;
                 }
-                res.send(results);
+
+
+                let reeeee = results.map(result => { 
+                    result.invites = result.invites.indexOf(req.user.username) !== -1;
+                    result.members = null;    
+                    return result
+                });
+                console.log(reeeee);
+                res.send(reeeee);
         });
     }
     else {
@@ -186,8 +197,16 @@ router.get(/^\/([^\/]+)\/?$/, function(req, res, next) {
             }
             if ( results !== null){
 
-                if ( results.visibility !== "hidden" || results.members.indexOf(user.username) !== -1){
-                    res.render('group', { title: results.name, group: true, currentUrl: req.params[0], user: user, isAdmin: results.admins.indexOf(user.username) !== -1});
+                if ( results.visibility !== "hidden" || results.members.indexOf(user.username) !== -1 || results.invites.indexOf(user.username) !== -1){
+                    res.render('group', { 
+                        title: results.name, 
+                        group: true, 
+                        currentUrl: req.params[0], 
+                        user: user, 
+                        isAdmin: results.admins.indexOf(user.username) !== -1,
+                        description: results.description,
+                        visibility: results.visibility
+                    });
                 }
                 else{
                     res.render('404', { title: "Ravie", user: user });
@@ -467,7 +486,7 @@ router.get(/^\/(.*)\/getEvents/, function(req, res, next) {
                         }
                     });
             }
-            else if (results.visibility === "private"){
+            else if (results.visibility === "hidden"){
                 res.send("private");
             }
             else{
