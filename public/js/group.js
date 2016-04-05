@@ -35,6 +35,11 @@ var timePickerValidator = function timePickerValidator() {
 
         var eRest = _ref4.slice(4);
 
+        sHours = Number(sHours);
+        sMinutes = Number(sMinutes);
+        eHours = Number(eHours);
+        eMinutes = Number(eMinutes);
+
         if (eAMPM === "am" && sAMPM === "pm") {
             return false;
         } else if (eAMPM === "pm" && sAMPM === "am") {

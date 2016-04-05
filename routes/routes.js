@@ -126,7 +126,6 @@ router.post('/suggestion', function(req, res, next) {
             subject: 'Suggestion', // Subject line
             text: `User: ${suggestionConfig.user}\n`
                 + `Url: ${suggestionConfig.url}\n`
-                + `IP: ${suggestionConfig.ip}\n`
                 + `Sentiment: ${suggestionConfig.sentiment}\n`
                 + `Suggestion: ${suggestionConfig.suggestion}`, // plaintext body
         };

@@ -13,6 +13,12 @@ var timePickerValidator = () => {
         let [sGarbage, sHours, sMinutes, sAMPM, ...sRest] = dateRegex.exec(start) || [];
         let [eGarbage, eHours, eMinutes, eAMPM, ...eRest] = dateRegex.exec(end) || [];
 
+        // I hate javascript
+        sHours = Number(sHours);
+        sMinutes = Number(sMinutes);
+        eHours = Number(eHours);
+        eMinutes = Number(eMinutes);
+
         // Simplify this with boolean logic? Meh, not worth it
         if(eAMPM === "am" && sAMPM === "pm"){
             return false;
